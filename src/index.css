@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body {
+  overflow-x: hidden;
+}
+
+body {
+  background: #f0ece4;
+}
+
+/* ---- Fondo de papel ----
+   fondo1-seamless.jpg: tile espejado 1024x1024 generado desde fondo1.jpeg.
+   Bordes opuestos identicos -> repite sin costura visible. */
+.bg-paper {
+  background-color: #f0ece4;
+  background-image: url('/fondo1-seamless.jpg');
+  background-size: 760px 760px;
+  background-repeat: repeat;
+}
+
+/* Floral sepia con alpha: deja ver el papel debajo.
+   El motivo crece con la pantalla para no leerse como mosaico repetido. */
+.floral-band {
+  background-image: url('/floral-sepia.png');
+  background-size: 300px auto;
+  background-repeat: repeat;
+  pointer-events: none;
+}
+
+@media (min-width: 1024px) {
+  .floral-band { background-size: 460px auto; }
+}
+
+@media (min-width: 1536px) {
+  .floral-band { background-size: 560px auto; }
+}
+
+/* ---- Overlays y seleccion ---- */
+::selection {
+  background: rgba(107, 22, 32, 0.22);
+  color: #2a1b17;
+}
+
+:focus-visible {
+  outline: 2px solid rgba(107, 22, 32, 0.55);
+  outline-offset: 3px;
+  border-radius: 9999px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
