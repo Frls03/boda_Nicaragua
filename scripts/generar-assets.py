@@ -11,7 +11,7 @@ from collections import deque
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageEnhance, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageOps
 
 PUB = Path(__file__).resolve().parent.parent / "public"
 
@@ -133,22 +133,38 @@ def main() -> None:
     # recorta arriba hasta donde la hoja tiene su ancho completo
     ancho = np.where((alpha > 60).sum(1) > alpha.shape[1] * 0.96)[0].min()
     papel = papel.crop((0, ancho, papel.size[0], papel.size[1]))
+    # el pixel mas externo arrastra granate del fondo: se ve como una linea
+    # oscura en los costados. Erosionar 1px el alfa la elimina.
+    r, g, b, a = papel.split()
+    papel = Image.merge("RGBA", (r, g, b, a.filter(ImageFilter.MinFilter(3))))
 
     flores = quitar_fondo(Image.open(PUB / "abajomarco.png"), lambda r, g, b:
                           (abs(r - 229) < 26) & (abs(g - 229) < 26) & (abs(b - 222) < 28))
-    fa = np.array(flores)[:, :, 3]
-    filas = np.where((fa > 60).sum(1) > fa.shape[1] * 0.25)[0]
-    flores = flores.crop((0, filas.min(), flores.size[0], flores.size[1]))
-    flores = flores.crop(flores.getbbox())
+    # completas, con los tallos que suben por los costados
+    W, fh = flores.size
 
-    PW, PH = papel.size
-    pad = int(PW * 0.11)
-    CW = PW + pad * 2
-    fh = int(flores.size[1] * CW / flores.size[0])
-    top = PH - int(fh * 0.38)  # el macizo pisa la base sin tapar el texto
-    lienzo = Image.new("RGBA", (CW, top + fh), (0, 0, 0, 0))
-    lienzo.alpha_composite(papel, (pad, 0))
-    lienzo.alpha_composite(flores.resize((CW, fh), Image.LANCZOS), (0, top))
+    # El papel va al ancho de las flores: recortado a su borde tipico (las
+    # irregularidades del rasgado sobresalen apenas unos px) y escalado.
+    pa = np.array(papel)[:, :, 3] > 60
+    medio = pa[: int(pa.shape[0] * 0.8)]  # costados, sin el borde inferior
+    izq = int(np.median([np.argmax(f) for f in medio]))
+    der = int(np.median([len(f) - 1 - np.argmax(f[::-1]) for f in medio]))
+    papel = papel.crop((izq, 0, der + 1, papel.size[1]))
+    PH = int(papel.size[1] * W / papel.size[0])
+    papel = papel.resize((W, PH), Image.LANCZOS)
+
+    # esquinas superiores redondeadas (las inferiores quedan tras las flores)
+    radio = int(W * 0.06)
+    esquinas = Image.new("L", (W, PH), 0)
+    ImageDraw.Draw(esquinas).rounded_rectangle((0, 0, W - 1, PH + radio), radius=radio, fill=255)
+    papel.putalpha(ImageChops.multiply(papel.getchannel("A"), esquinas))
+
+    # el borde rasgado inferior del papel queda a la altura de los lirios,
+    # los tallos suben por los costados del texto
+    top = PH - int(fh * 0.6)
+    lienzo = Image.new("RGBA", (W, max(PH, top + fh)), (0, 0, 0, 0))
+    lienzo.alpha_composite(papel, (0, 0))
+    lienzo.alpha_composite(flores, (0, top))
     lienzo.save(PUB / "verso-completo.png")
     print(f"  verso-completo.png  {lienzo.size}")
 

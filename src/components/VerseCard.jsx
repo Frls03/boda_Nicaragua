@@ -3,7 +3,7 @@ export default function VerseCard() {
     <section className="relative mt-14 px-4 sm:px-8 lg:mt-28">
       <div className="relative mx-auto w-full max-w-[400px] sm:max-w-[460px] lg:max-w-[680px] xl:max-w-[780px]">
         {/* Papel rasgado con las flores al pie, compuestos en un solo asset
-            para que compartan el borde y la textura no se corte. */}
+            al mismo ancho: las flores suben por los costados del papel. */}
         <img
           src="/verso-completo.png"
           alt=""
@@ -11,9 +11,11 @@ export default function VerseCard() {
           className="w-full select-none drop-shadow-[0_14px_30px_rgba(60,40,30,.28)]"
         />
 
-        {/* Texto sobre el papel (el papel ocupa el 80% superior del asset) */}
-        <div className="absolute inset-x-[16%] top-[9%] text-center">
-          <blockquote className="font-script leading-[1.85] text-[#2b3653] text-[clamp(16px,3.8vw,25px)] lg:text-[34px] xl:text-[39px]">
+        {/* Texto sobre el papel: termina ~64% del alto, antes de las flores (~71%) */}
+        <div className="absolute inset-x-[10%] top-[11%] text-center">
+          {/* Linea mas larga = 6.33em y la caja es el 80% de la tarjeta: estos
+              tamanos caben a lo ancho y terminan ~64% del alto, antes de las flores. */}
+          <blockquote className="font-script leading-[1.75] text-[#2b3653] text-[clamp(20px,5.2vw,29px)] lg:text-[44px] xl:text-[50px]">
             Ponme como un sello
             <br />
             sobre tu corazón,

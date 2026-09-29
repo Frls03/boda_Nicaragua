@@ -1,7 +1,7 @@
 # Invitación de boda — Jonathan & Jasmin
 
 Invitación web de una sola página. React 18 + Vite + Tailwind.
-Boda: **01/02/2027**, Santa Cruz de la Sierra, Bolivia.
+Boda: **17/04/2027**, Jardín Green Box, San Lucas Sacatepéquez, Guatemala.
 
 ```bash
 npm install
@@ -36,7 +36,7 @@ Estas son decisiones tomadas con el cliente, no preferencias. Respetarlas:
 | `floral-cream.png` | `Fondo_floreado.png` | Tono sobre tono crema, para la solapa del sobre. |
 | `sello-navy.png` | `Sello.png` | Recolor plata → azul marino. Sobre de apertura. |
 | `sello-verso.png` | `Sello.png` | Recolor plata → granate. Tarjeta del versículo. |
-| `verso-completo.png` | `marco1.png` + `abajomarco.png` | Papel rasgado (recorte y 202-620, sin el fondo granate) compuesto con las flores (fondo eliminado por flood fill). |
+| `verso-completo.png` | `marco1.png` + `abajomarco.png` | Papel rasgado (recorte y 202-620, sin el fondo granate) compuesto con las flores (fondo eliminado por flood fill). Papel escalado al ancho de las flores (450px); flores completas con tallos, subiendo por los costados. |
 
 ### Por qué están compuestos papel y flores en un solo archivo
 
@@ -67,11 +67,23 @@ natural, el macizo floral apoya sobre la base del papel.
   guarda en `localStorage` para poder previsualizar el flujo. Los nombres de
   query y mutation (`rsvpStatus`, `submitRsvp`) son un contrato supuesto:
   ajustarlos al schema real del backend.
+- **Tope de adultos por invitación.** `Rsvp.jsx` usa `DEFAULT_MAX_GUESTS = 4`
+  fijo. Cuando exista el backend (vendrá del admin de otro proyecto), leer el
+  max attendees del invitado desde la API y pasarlo a `maxGuests`. El contador
+  ya respeta el tope; `submitRsvp` sigue recibiendo `"N persona(s)"`.
 - **Sin navegador headless en el entorno.** Los cambios visuales se verifican
   con `npm run build` y mirando la pantalla; no hay tests de regresión visual.
 
 ## Texto de la invitación
 
-La dirección se corrigió respecto del diseño original de referencia, que decía
-"Av. San Martín **and** 4to anillo" y "Equipetrol Norte Santa Cruz" sin coma.
-Si el cliente quiere el texto textual del diseño, revertir en `Location.jsx`.
+Datos del cliente (links en las constantes al tope de cada componente):
+
+- **Ubicación** (`Location.jsx`): el cliente escribió "Sacatepeques"; se usa
+  la grafía oficial "Sacatepéquez". El botón abre el link de Waze del cliente.
+- **Dress Code** (`DressCode.jsx`): "Colores a evitar" corinto, azul marino y
+  blanco (son los colores de la boda). El botón abre referencias en Pinterest.
+- **Mesa de regalos** (`GiftRegistry.jsx`): lista en Cemaco. Es la única
+  tarjeta oscura de la página a propósito: el cliente pidió que no se ignore.
+- **RSVP** (`Rsvp.jsx`): fecha límite "01 de marzo del 2027" **sin día de la
+  semana**. El cliente pidió "viernes", pero ese día cae lunes; eligió quitarlo.
+  Aviso de evento solo para adultos junto al formulario.

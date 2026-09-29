@@ -5,6 +5,7 @@ import VerseCard from './components/VerseCard';
 import Gallery from './components/Gallery';
 import DressCode from './components/DressCode';
 import Location from './components/Location';
+import GiftRegistry from './components/GiftRegistry';
 import Rsvp from './components/Rsvp';
 
 export default function App() {
@@ -54,7 +55,7 @@ export default function App() {
             </p>
 
             <p className="mt-5 text-center font-serif font-light tracking-[.12em] text-[#2b3653] text-[clamp(28px,6.5vw,44px)] lg:mt-9 lg:text-[62px] xl:text-[72px]">
-              01 | 02 | 2027
+              17 | 04 | 2027
             </p>
           </div>
         </section>
@@ -76,6 +77,7 @@ export default function App() {
             <Gallery />
             <DressCode />
             <Location />
+            <GiftRegistry />
             <Rsvp />
           </div>
         </section>
