@@ -2,12 +2,14 @@ export default function Hero() {
   return (
     <section className="relative flex w-full justify-center pt-20 sm:pt-24 lg:pt-32 xl:pt-36">
       <div className="relative w-full max-w-[300px] sm:max-w-[340px] lg:max-w-[520px] xl:max-w-[600px]">
-        {/* Arco alto (1:1.7), como el diseno de referencia */}
+        {/* Arco en 2:3, la proporcion de Portada.jpg: la foto no se recorta
+            (solo el arco redondea las esquinas superiores). */}
         <div className="overflow-hidden rounded-t-full shadow-[0_14px_34px_-14px_rgba(60,40,30,.55)]">
           <img
-            src="/foto1.png"
-            alt="Jonathan y Jasmin"
-            className="aspect-[1/1.7] w-full select-none object-cover grayscale"
+            src="/fotos/portada.jpg"
+            alt="Jonathan y Jasmin en el jardín"
+            fetchpriority="high"
+            className="aspect-[2/3] w-full select-none object-cover"
           />
         </div>
 

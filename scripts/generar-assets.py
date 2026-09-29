@@ -168,6 +168,18 @@ def main() -> None:
     lienzo.save(PUB / "verso-completo.png")
     print(f"  verso-completo.png  {lienzo.size}")
 
+    # --- fotos: versiones web de los originales del cliente (2400x3600, 0.5-2 MB) ---
+    # ancho = 2x el maximo en pantalla (hero 600px, celda del collage ~460px)
+    destino = PUB / "fotos"
+    destino.mkdir(exist_ok=True)
+    fotos = [("Portada.jpg", 1200)] + [(f"collage{i}.jpg", 1000) for i in range(1, 6)] + [("Collage6.jpg", 1000)]
+    for origen, ancho in fotos:
+        im = ImageOps.exif_transpose(Image.open(PUB / origen)).convert("RGB")
+        im = im.resize((ancho, round(im.height * ancho / im.width)), Image.LANCZOS)
+        salida = destino / origen.lower()
+        im.save(salida, quality=82, optimize=True, progressive=True)
+        print(f"  fotos/{salida.name}  {im.size}  {salida.stat().st_size // 1024} KB")
+
 
 if __name__ == "__main__":
     print("Regenerando assets en public/ ...")
