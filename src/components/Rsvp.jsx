@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { formatDate, submitRsvp } from '../data/wedding';
 
 const pill =
@@ -24,6 +24,15 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
   const [editing, setEditing] = useState(guest.attendance === 'pending');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  // true solo justo despues de enviar: anima el sello y lleva la vista al mensaje
+  const [justSent, setJustSent] = useState(false);
+  const thanksRef = useRef(null);
+
+  useEffect(() => {
+    if (!justSent || !thanksRef.current) return;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    thanksRef.current.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+  }, [justSent]);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -39,6 +48,7 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
       });
       onGuestUpdate(updated);
       setEditing(false);
+      setJustSent(true);
     } catch {
       setError('No se pudo enviar tu confirmación. Intenta de nuevo.');
     } finally {
@@ -83,22 +93,53 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
       </aside>
 
       {!editing ? (
-        <div className="text-center" role="status">
-          <p className="font-script leading-[1.1] text-maroon text-[clamp(34px,8.5vw,44px)] lg:text-[58px]">
+        <div
+          ref={thanksRef}
+          role="status"
+          className={`rsvp-thanks relative mx-auto max-w-[400px] text-center lg:max-w-[600px] ${justSent ? 'rsvp-sealed' : ''}`}
+        >
+          {/* La respuesta queda "sellada" con el lacre J&J de la invitacion */}
+          <img
+            src={guest.attendance === 'confirmed' ? '/sello-verso.png' : '/sello-navy.png'}
+            alt=""
+            aria-hidden="true"
+            className="rsvp-seal mx-auto w-[96px] select-none drop-shadow-[0_8px_14px_rgba(60,30,30,.35)] lg:w-[128px]"
+          />
+
+          <p className="rsvp-line mt-4 font-script leading-[1.05] text-maroon text-[clamp(42px,11vw,56px)] lg:mt-6 lg:text-[76px]">
             {guest.attendance === 'confirmed' ? '¡Gracias por confirmar!' : 'Gracias por avisarnos'}
           </p>
-          <p className="mx-auto mt-3 max-w-[32ch] font-serif leading-snug text-ink text-[clamp(15px,3.7vw,17px)] lg:mt-4 lg:text-[22px]">
-            {guest.attendance === 'confirmed'
-              ? `Te esperamos: ${adultos(guest.attendanceCount)}.`
-              : 'Lamentamos que no puedas acompañarnos. Te tendremos presente.'}
-          </p>
-          <p className="mt-2 text-[clamp(12px,3vw,14px)] text-[#8a7a6a] lg:text-[17px]">
+
+          {guest.attendance === 'confirmed' ? (
+            <>
+              <p className="rsvp-line mx-auto mt-3 max-w-[30ch] font-serif leading-snug text-ink text-[clamp(17px,4.3vw,20px)] lg:mt-4 lg:text-[26px]">
+                {guest.attendanceCount > 1 ? 'Los' : 'Te'} esperamos con mucha ilusión el{' '}
+                <span className="whitespace-nowrap">17 de abril</span>.
+              </p>
+
+              <div className="rsvp-line mx-auto mt-6 flex max-w-[320px] items-center gap-3 lg:mt-8 lg:max-w-[440px] lg:gap-4">
+                <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-r from-transparent to-maroon/50" />
+                <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-maroon/70" />
+                <p className="whitespace-nowrap font-serif font-semibold uppercase tracking-[.2em] text-[#2b3653] text-[clamp(13px,3.4vw,15px)] lg:text-[19px]">
+                  {adultos(guest.attendanceCount)}
+                </p>
+                <span aria-hidden="true" className="h-1.5 w-1.5 rotate-45 bg-maroon/70" />
+                <span aria-hidden="true" className="h-px flex-1 bg-gradient-to-l from-transparent to-maroon/50" />
+              </div>
+            </>
+          ) : (
+            <p className="rsvp-line mx-auto mt-3 max-w-[30ch] font-serif leading-snug text-ink text-[clamp(17px,4.3vw,20px)] lg:mt-4 lg:text-[26px]">
+              Lamentamos que no puedas acompañarnos. Te tendremos presente.
+            </p>
+          )}
+
+          <p className="rsvp-line mt-4 text-[clamp(12px,3vw,14px)] text-[#6b5d50] lg:mt-5 lg:text-[17px]">
             Respuesta del {formatDate(guest.updatedAt)}
           </p>
           <button
             type="button"
-            onClick={() => setEditing(true)}
-            className="mx-auto mt-6 rounded-full border border-[#2b3653] px-8 py-2.5 text-[10px] font-medium tracking-[.2em] text-[#2b3653] transition-colors duration-300 hover:bg-[#2b3653] hover:text-cream lg:mt-8 lg:px-12 lg:py-3 lg:text-[13px]"
+            onClick={() => { setJustSent(false); setEditing(true); }}
+            className="rsvp-line mx-auto mt-6 rounded-full border border-[#2b3653] bg-[#f4efe4]/70 px-8 py-2.5 text-[10px] font-medium tracking-[.2em] text-[#2b3653] transition-colors duration-300 hover:bg-[#2b3653] hover:text-cream lg:mt-8 lg:px-12 lg:py-3 lg:text-[13px]"
           >
             CAMBIAR MI RESPUESTA
           </button>

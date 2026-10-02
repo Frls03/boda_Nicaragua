@@ -53,6 +53,51 @@ body {
   border-radius: 9999px;
 }
 
+/* ---- RSVP: la respuesta queda sellada ----
+   Solo justo despues de enviar (.rsvp-sealed): el lacre baja y se asienta,
+   y el texto aparece debajo. Al volver a la pagina el mensaje ya esta quieto. */
+.rsvp-thanks {
+  isolation: isolate; /* el ::before queda detras del texto pero sobre las flores */
+}
+
+/* Resplandor color papel detras del mensaje: aclara la banda floral solo
+   donde hay texto, sin caja ni borde. */
+.rsvp-thanks::before {
+  content: '';
+  position: absolute;
+  inset: -2.5rem -3rem -2rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, rgba(240, 236, 228, 0.94) 55%, rgba(240, 236, 228, 0));
+  pointer-events: none;
+}
+
+.rsvp-sealed .rsvp-seal {
+  animation: rsvp-stamp 900ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+}
+
+.rsvp-sealed .rsvp-line {
+  animation: rsvp-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.rsvp-sealed .rsvp-line:nth-of-type(1) { animation-delay: 380ms; }
+.rsvp-sealed .rsvp-line:nth-of-type(2) { animation-delay: 480ms; }
+.rsvp-sealed .rsvp-line:nth-of-type(3) { animation-delay: 580ms; }
+.rsvp-sealed .rsvp-line:nth-of-type(4) { animation-delay: 680ms; }
+.rsvp-sealed div.rsvp-line { animation-delay: 580ms; }
+.rsvp-sealed button.rsvp-line { animation-delay: 780ms; }
+
+@keyframes rsvp-stamp {
+  0%   { opacity: 0; transform: translateY(-28px) scale(1.35) rotate(-10deg); filter: blur(2px); }
+  55%  { opacity: 1; transform: translateY(0) scale(0.94) rotate(2deg); filter: blur(0); }
+  75%  { transform: scale(1.03) rotate(-1deg); }
+  100% { opacity: 1; transform: scale(1) rotate(0); }
+}
+
+@keyframes rsvp-rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
