@@ -11,6 +11,25 @@ const AdminPanel = lazy(() => import('./admin/AdminPanel'));
 export default function App() {
   return (
     <BrowserRouter>
+      {/* DEMO: quitar este bloque al conectar Supabase.
+          Franja en el flujo normal (no flotante): se va al desplazar y no tapa nada. */}
+      {isDemo && (
+        <div className="flex items-center justify-center gap-3 bg-[#2b3653] px-4 py-1.5 text-[11px] font-medium tracking-[.06em] text-cream">
+          <span>MODO DEMO<span className="hidden sm:inline"> · datos de prueba en este navegador</span></span>
+          <button
+            type="button"
+            onClick={() => {
+              resetDemo();
+              sessionStorage.clear();
+              window.location.reload();
+            }}
+            className="rounded-full px-2 py-0.5 underline decoration-cream/50 underline-offset-2 transition-colors hover:bg-cream/15"
+          >
+            Reiniciar datos
+          </button>
+        </div>
+      )}
+
       <Routes>
         <Route path="/" element={<Invite />} />
         <Route
@@ -23,24 +42,6 @@ export default function App() {
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-
-      {/* DEMO: quitar este bloque al conectar Supabase */}
-      {isDemo && (
-        <div className="fixed bottom-[92px] left-3 z-[60] min-[861px]:bottom-3 min-[861px]:left-auto min-[861px]:right-3 flex items-center gap-2 rounded-full bg-[#2b3653]/90 py-1.5 pl-3.5 pr-1.5 text-[11px] font-medium tracking-[.08em] text-cream shadow-lg backdrop-blur">
-          MODO DEMO
-          <button
-            type="button"
-            onClick={() => {
-              resetDemo();
-              sessionStorage.clear();
-              window.location.reload();
-            }}
-            className="rounded-full bg-cream/15 px-2.5 py-1 transition-colors hover:bg-cream/30"
-          >
-            Reiniciar datos
-          </button>
-        </div>
-      )}
     </BrowserRouter>
   );
 }

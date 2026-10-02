@@ -96,18 +96,19 @@
   border-radius: var(--r-sm);
 }
 
-.adm-theme * {
+/* :where(): especificidad cero, asi las filas de filtros pueden ocultar su barra */
+:where(.adm-theme *) {
   scrollbar-width: thin;
   scrollbar-color: var(--line-strong) transparent;
 }
 
-.adm-theme ::-webkit-scrollbar { width: 10px; height: 10px; }
-.adm-theme ::-webkit-scrollbar-thumb {
+:where(.adm-theme) ::-webkit-scrollbar { width: 10px; height: 10px; }
+:where(.adm-theme) ::-webkit-scrollbar-thumb {
   background: var(--line-strong);
   border-radius: var(--r-full);
   border: 3px solid var(--bg);
 }
-.adm-theme ::-webkit-scrollbar-track { background: transparent; }
+:where(.adm-theme) ::-webkit-scrollbar-track { background: transparent; }
 
 .adm-theme input::placeholder,
 .adm-theme textarea::placeholder {

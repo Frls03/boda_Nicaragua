@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+// Primero el sistema base: los estilos de cada pestaña deben quedar por encima
+import './theme.css'
 import { ChartDonut, SignOut, UsersThree, Armchair } from '@phosphor-icons/react'
 import AdminGate from './AdminGate'
 import GuestsTab from './GuestsTab'
@@ -6,7 +8,6 @@ import DashboardTab from './DashboardTab'
 import TablesTab from './TablesTab'
 import Monogram from '../components/Monogram'
 import { coupleName, logoutAdmin, readAdminSession } from '../data/wedding'
-import './theme.css'
 import './Admin.css'
 
 const TABS = [
