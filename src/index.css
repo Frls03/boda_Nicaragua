@@ -53,9 +53,7 @@ body {
   border-radius: 9999px;
 }
 
-/* ---- RSVP: la respuesta queda sellada ----
-   Solo justo despues de enviar (.rsvp-sealed): el lacre baja y se asienta,
-   y el texto aparece debajo. Al volver a la pagina el mensaje ya esta quieto. */
+/* ---- RSVP: mensaje de confirmacion ---- */
 .rsvp-thanks {
   isolation: isolate; /* el ::before queda detras del texto pero sobre las flores */
 }
@@ -71,31 +69,146 @@ body {
   pointer-events: none;
 }
 
+/* ---- Movimiento de la invitacion: suave y continuo ----
+   Una sola gramatica: fundido + desenfoque que se aclara + ascenso corto,
+   siempre con la misma curva lenta. Sin rebotes, giros ni recortes.
+   Todo es visible por defecto: las clases que ocultan las pone JS. */
+:root {
+  --soft-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Las animaciones usan fill "backwards": al terminar no queda filter ni
+   transform aplicado, asi el texto vuelve a pintarse normal y los trazos de
+   la letra caligrafica (remate de la G, cola de la f) no se recortan. */
+
+/* Linea caligrafica del RSVP: margen interno para que los trazos que salen
+   de la caja queden dentro de ella aun durante la animacion. */
+.rsvp-script {
+  padding: 0.22em 0.14em;
+  margin-left: -0.14em;
+  margin-right: -0.14em;
+  margin-bottom: -0.22em;
+}
+
+/* RSVP: responde a un clic con un ritmo pausado pero sin esperas largas
+   (inicios: sello 0.10s, luego cada linea 0.15s despues; fin a los 2.1s). El sello usa soft-seal, sin filtros, para no
+   pisar su drop-shadow: la sombra aparece junto con el sello. */
 .rsvp-sealed .rsvp-seal {
-  animation: rsvp-stamp 900ms cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  animation: soft-seal 1300ms var(--soft-ease) 100ms backwards;
 }
 
 .rsvp-sealed .rsvp-line {
-  animation: rsvp-rise 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: soft-focus-quick 1100ms var(--soft-ease) backwards;
 }
 
-.rsvp-sealed .rsvp-line:nth-of-type(1) { animation-delay: 380ms; }
-.rsvp-sealed .rsvp-line:nth-of-type(2) { animation-delay: 480ms; }
-.rsvp-sealed .rsvp-line:nth-of-type(3) { animation-delay: 580ms; }
-.rsvp-sealed .rsvp-line:nth-of-type(4) { animation-delay: 680ms; }
-.rsvp-sealed div.rsvp-line { animation-delay: 580ms; }
-.rsvp-sealed button.rsvp-line { animation-delay: 780ms; }
+/* p:1 "Gracias", p:2 texto, div "4 adultos", p:3 "Respuesta del", boton */
+.rsvp-sealed p.rsvp-line:nth-of-type(1) { animation-delay: 350ms; }
+.rsvp-sealed p.rsvp-line:nth-of-type(2) { animation-delay: 500ms; }
+.rsvp-sealed div.rsvp-line             { animation-delay: 650ms; }
+.rsvp-sealed p.rsvp-line:nth-of-type(3) { animation-delay: 800ms; }
+.rsvp-sealed button.rsvp-line           { animation-delay: 1000ms; }
 
-@keyframes rsvp-stamp {
-  0%   { opacity: 0; transform: translateY(-28px) scale(1.35) rotate(-10deg); filter: blur(2px); }
-  55%  { opacity: 1; transform: translateY(0) scale(0.94) rotate(2deg); filter: blur(0); }
-  75%  { transform: scale(1.03) rotate(-1deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
+/* Apertura (.inv-play en <main>, al abrir el sobre) */
+.inv-play .inv-arch {
+  animation: soft-fade 1800ms ease-out backwards;
 }
 
-@keyframes rsvp-rise {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+/* La foto se asienta y despues "respira" sin parar, muy lento */
+.inv-play .inv-arch-img {
+  animation:
+    soft-photo-settle 2800ms var(--soft-ease) both,
+    soft-photo-breathe 26s ease-in-out 2800ms infinite alternate;
+}
+
+.inv-play .inv-escudo {
+  animation: soft-settle 1600ms var(--soft-ease) 600ms backwards;
+}
+
+/* Nombres y fecha (useInkOnView): entran en foco al llegar a la vista.
+   --inv-start espera en celular a que la foto termine de aparecer. */
+.inv-text-ready :is(.inv-ink, .inv-names, .inv-date) {
+  opacity: 0;
+}
+
+.inv-text-play :is(.inv-ink, .inv-names, .inv-date) {
+  opacity: 1;
+  animation: soft-focus 1500ms var(--soft-ease) backwards;
+}
+
+.inv-text-play .inv-ink-1  { animation-delay: var(--inv-start, 0ms); }
+.inv-text-play .inv-names  { animation-delay: calc(var(--inv-start, 0ms) + 250ms); animation-duration: 1900ms; }
+.inv-text-play .inv-ink-2  { animation-delay: calc(var(--inv-start, 0ms) + 750ms); }
+.inv-text-play .inv-date   { animation-delay: calc(var(--inv-start, 0ms) + 1000ms); }
+
+/* Resto de la pagina (useRevealOnScroll): cada bloque aparece al llegar.
+   Las fotos de la galeria entran en cascada (--reveal-i). */
+.reveal-ready {
+  opacity: 0;
+  transform: translateY(22px);
+}
+
+.reveal-ready.is-revealed {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 1400ms ease-out calc(var(--reveal-i, 0) * 140ms),
+    transform 1700ms var(--soft-ease) calc(var(--reveal-i, 0) * 140ms);
+}
+
+@keyframes soft-fade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes soft-photo-settle {
+  from { transform: scale(1.045); }
+  to   { transform: scale(1); }
+}
+
+@keyframes soft-photo-breathe {
+  from { transform: scale(1); }
+  to   { transform: scale(1.045) translateY(-1%); }
+}
+
+/* translate individual: se suma al -translate de Tailwind que centra el
+   escudo y los sellos sobre su borde */
+@keyframes soft-settle {
+  from { opacity: 0; translate: 0 -10px; filter: blur(3px); }
+  to   { opacity: 1; translate: 0 0; filter: blur(0); }
+}
+
+/* Sellos con drop-shadow: solo opacidad y descenso, nunca filter */
+@keyframes soft-seal {
+  from { opacity: 0; translate: 0 -8px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+
+@keyframes soft-focus-quick {
+  from { opacity: 0; transform: translateY(6px); filter: blur(2px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@keyframes soft-focus {
+  from { opacity: 0; transform: translateY(10px); filter: blur(5px); }
+  to   { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Sin desplazamientos ni bucles: fundidos breves y nada oculto */
+  .inv-play :is(.inv-arch, .inv-escudo),
+  .inv-text-play :is(.inv-ink, .inv-names, .inv-date),
+  .rsvp-sealed :is(.rsvp-seal, .rsvp-line) {
+    animation: soft-fade 400ms ease both !important;
+  }
+
+  .inv-play .inv-arch-img {
+    animation: none !important;
+  }
+
+  .reveal-ready {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

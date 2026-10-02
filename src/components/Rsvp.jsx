@@ -103,10 +103,10 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
             src={guest.attendance === 'confirmed' ? '/sello-verso.png' : '/sello-navy.png'}
             alt=""
             aria-hidden="true"
-            className="rsvp-seal mx-auto w-[96px] select-none drop-shadow-[0_8px_14px_rgba(60,30,30,.35)] lg:w-[128px]"
+            className="rsvp-seal mx-auto w-[64px] select-none drop-shadow-[0_6px_10px_rgba(60,30,30,.32)] lg:w-[84px]"
           />
 
-          <p className="rsvp-line mt-4 font-script leading-[1.05] text-maroon text-[clamp(42px,11vw,56px)] lg:mt-6 lg:text-[76px]">
+          <p className="rsvp-line rsvp-script mt-1 font-script leading-[1.05] text-maroon text-[clamp(42px,11vw,56px)] lg:mt-3 lg:text-[76px]">
             {guest.attendance === 'confirmed' ? '¡Gracias por confirmar!' : 'Gracias por avisarnos'}
           </p>
 

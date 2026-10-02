@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function Envelope({ onOpened }) {
+export default function Envelope({ onLeaving, onOpened }) {
   const [phase, setPhase] = useState('closed'); // closed -> opening -> leaving -> done
 
   function handleSealClick() {
@@ -10,7 +10,11 @@ export default function Envelope({ onOpened }) {
 
   function handleFlapTransitionEnd(e) {
     if (e.propertyName !== 'transform') return;
-    if (phase === 'opening') setPhase('leaving');
+    if (phase === 'opening') {
+      setPhase('leaving');
+      // la invitacion empieza a aparecer mientras el sobre se desvanece
+      onLeaving?.();
+    }
   }
 
   function handleScreenTransitionEnd(e) {

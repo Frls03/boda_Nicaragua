@@ -37,9 +37,10 @@ export default function Gallery() {
     <section className="flex flex-col gap-2 sm:gap-3 lg:gap-4">
       {blocks.map((block, i) => (
         <div key={i} className={`grid gap-2 sm:gap-3 lg:gap-4 ${block.cols}`}>
-          {block.photos.map((photo) => (
+          {block.photos.map((photo, j) => (
             <img
               key={photo.src}
+              data-reveal={j}
               src={photo.src}
               alt={photo.alt}
               loading="lazy"
