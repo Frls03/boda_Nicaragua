@@ -11,7 +11,7 @@ from collections import deque
 from pathlib import Path
 
 import numpy as np
-from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageOps
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter, ImageFont, ImageOps
 
 PUB = Path(__file__).resolve().parent.parent / "public"
 
@@ -83,6 +83,70 @@ def tenir(src: Image.Image, sombra, luz) -> Image.Image:
     return out
 
 
+FUENTE_MONOGRAMA = Path(__file__).resolve().parent / "fonts" / "GreatVibes-Regular.ttf"
+
+# Monograma J&J en diagonal, mismas coordenadas que src/components/Monogram.jsx
+# (viewBox 94x135, x / linea base / tamaño). Mantener ambos iguales.
+MONOGRAMA = [("J", 12.6, 47.5, 44), ("&", 37.3, 75.6, 26), ("J", 29.8, 106.2, 44)]
+
+
+def sello_jj(src: Image.Image, escala: int = 2) -> Image.Image:
+    """
+    Sello.png trae una rama en relieve dentro del disco central. Se alisa la
+    cera de ese disco (desenfoque fuerte: conserva la luz, borra la rama) y
+    se estampa el monograma J&J hundido en la cera. Sale a 2x (400px) para
+    que las letras queden nitidas; el aro exterior es el del original.
+    """
+    im = src.convert("RGBA")
+    im = im.resize((im.width * escala, im.height * escala), Image.LANCZOS)
+    W, H = im.size
+    a = np.array(im).astype(float)
+
+    # disco interior medido en el original: centro (104.8, 96.4), radio 62 de 200px
+    cx, cy, R = 104.8 * escala, 96.4 * escala, 62 * escala
+    yy, xx = np.mgrid[0:H, 0:W]
+    r = np.hypot(xx - cx, yy - cy)
+
+    # cera lisa: fuera del disco se rellena con el tono del campo para que el
+    # surco oscuro del aro no manche el desenfoque
+    campo = np.median(a[(r > R - 14) & (r < R - 4)][:, :3], axis=0)
+    base = a.copy()
+    base[r > R - 4, :3] = campo
+    lisa = np.array(Image.fromarray(base.astype("uint8")).filter(ImageFilter.GaussianBlur(18 * escala))).astype(float)
+    borde = np.clip((R - 3 - r) / 4, 0, 1)[..., None]  # fundido de 4px hacia el aro
+    a[:, :, :3] = a[:, :, :3] * (1 - borde) + lisa[:, :, :3] * borde
+
+    # monograma: mascara de las letras centrada en el disco
+    # la tinta mide 111 unidades de alto: ocupa ~80% del diametro del disco
+    k = 0.80 * 2 * R / 111  # unidades del viewBox -> px del sello
+    tinta = (9.9, 11.8, 86.0, 122.9)  # caja de la tinta medida con Pillow
+    ox = cx - (tinta[0] + tinta[2]) / 2 * k
+    oy = cy - (tinta[1] + tinta[3]) / 2 * k
+    mascara = Image.new("L", (W, H), 0)
+    dib = ImageDraw.Draw(mascara)
+    for letra, x, y, tam in MONOGRAMA:
+        fuente = ImageFont.truetype(str(FUENTE_MONOGRAMA), round(tam * k))
+        dib.text((ox + x * k, oy + y * k), letra, font=fuente, fill=255, anchor="ls")
+    # trazo algo mas grueso que la fuente: la caligrafia fina se pierde en la cera
+    mascara = mascara.filter(ImageFilter.MaxFilter(5))
+    m = np.array(mascara.filter(ImageFilter.GaussianBlur(0.6 * escala))).astype(float) / 255
+
+    # hundido en la cera: fondo de la letra algo mas oscuro, sombra en la
+    # pared de arriba a la izquierda y brillo en la de abajo a la derecha
+    d = round(1.8 * escala)
+    corrida = lambda dx, dy: np.roll(np.roll(m, dy, axis=0), dx, axis=1)
+    sombra = np.clip(m - corrida(d, d), 0, 1)
+    brillo = np.clip(m - corrida(-d, -d), 0, 1)
+    suave = lambda x: np.array(Image.fromarray((x * 255).astype("uint8")).filter(ImageFilter.GaussianBlur(0.8 * escala))).astype(float) / 255
+    sombra, brillo = suave(sombra), suave(brillo)
+    rgb = a[:, :, :3]
+    rgb *= (1 - 0.26 * m)[..., None]
+    rgb *= (1 - 0.78 * sombra)[..., None]
+    rgb += (255 - rgb) * (0.85 * brillo)[..., None]
+    a[:, :, :3] = np.clip(rgb, 0, 255)
+    return Image.fromarray(a.astype("uint8"))
+
+
 def main() -> None:
     # --- fondos de papel (espejo 2x2, costura 0) ---
     for origen, destino, lado in [("fondo1.jpeg", "fondo1-seamless.jpg", 512),
@@ -116,11 +180,12 @@ def main() -> None:
     Image.fromarray(crema.astype("uint8")).save(PUB / "floral-cream.png")
     print("  floral-cream.png")
 
-    # --- sellos ---
-    sello = Image.open(PUB / "Sello.png").convert("RGBA")
+    # --- sellos: J&J estampado en vez de la rama del original ---
+    sello = sello_jj(Image.open(PUB / "Sello.png"))
+    sello.save(PUB / "sello-jj.png")
     tenir(sello, (14, 26, 52), (108, 132, 178)).save(PUB / "sello-navy.png")
     tenir(sello, (58, 8, 14), (176, 60, 70)).save(PUB / "sello-verso.png")
-    print("  sello-navy.png / sello-verso.png")
+    print(f"  sello-jj.png / sello-navy.png / sello-verso.png  {sello.size}")
 
     # --- papel del versiculo + flores ---
     # Limites geometricos, NO por color: la zona sombreada del papel cae dentro
