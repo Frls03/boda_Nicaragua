@@ -1,3 +1,5 @@
+import Monogram from './Monogram';
+
 export default function Hero() {
   return (
     <section className="relative flex w-full justify-center pt-20 sm:pt-24 lg:pt-32 xl:pt-36">
@@ -13,16 +15,9 @@ export default function Hero() {
           />
         </div>
 
-        {/* Escudo J&J montado sobre el arco, en diagonal como la referencia.
-            SVG porque ubica cada letra por su linea base: la J de Great Vibes
-            mide 1.34em de ancho y con texto HTML se salia del escudo.
-            Coordenadas medidas con Pillow sobre la fuente real. */}
+        {/* Escudo J&J montado sobre el arco, en diagonal como la referencia. */}
         <div className="absolute left-1/2 top-0 aspect-[94/135] w-[28%] -translate-x-1/2 -translate-y-1/2 rounded-[24%/17%] bg-maroon shadow-[0_8px_18px_-6px_rgba(0,0,0,.5)]">
-          <svg viewBox="0 0 94 135" role="img" aria-label="J & J" className="h-full w-full fill-cream font-script">
-            <text x="12.6" y="47.5" fontSize="44">J</text>
-            <text x="37.3" y="75.6" fontSize="26">&amp;</text>
-            <text x="29.8" y="106.2" fontSize="44">J</text>
-          </svg>
+          <Monogram className="h-full w-full fill-cream" />
         </div>
       </div>
     </section>

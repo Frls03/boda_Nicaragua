@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* clip (no hidden): corta el desborde lateral sin volver a body un
+   contenedor de scroll, que rompe position: sticky (barras del admin).
+   hidden queda como respaldo para navegadores sin soporte de clip. */
 html, body {
   overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {

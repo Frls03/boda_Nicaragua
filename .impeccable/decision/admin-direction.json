@@ -1,0 +1,221 @@
+{
+  "title": "Dirección visual del panel de los novios",
+  "question": "El sorteo asignó La faja. Quédate con ella, toma una alternativa o vuelve a sortear.",
+  "options": [
+    {
+      "id": "assigned",
+      "label": "La faja",
+      "kicker": "THE ROLL",
+      "lineage": "Fajas y cortes de telar de cintura de Sacatepéquez",
+      "thesis": "Cada invitación es un hilo; el panel es la tela que se va tejiendo con las respuestas.",
+      "palette": [
+        "#2b3653",
+        "#6b1620",
+        "#efe6d2",
+        "#d9cdb4",
+        "#1b1b1b"
+      ],
+      "materials": [
+        "algodón crudo de telar",
+        "urdimbre y trama a la vista",
+        "orillo tejido como borde"
+      ],
+      "viewport": "Arriba, la faja de respuestas: un hilo vertical por invitación teñido azul (viene), corinto (no viene) o crudo (falta); debajo, la lista como filas de urdimbre.",
+      "risk": "Si el tejido se vuelve motivo decorativo cae en disfraz: va como estructura de datos, nunca iconografía maya.",
+      "raised": [
+        {
+          "from": "challenger-lexicon",
+          "raise": "El color queda reservado al estado: solo los hilos teñidos llevan color, todo lo demás es tinta sobre crudo."
+        },
+        {
+          "from": "challenger-timetable",
+          "raise": "Las filas usan un solo tamaño de letra; el rango lo dan el peso, las mayúsculas y el filete."
+        },
+        {
+          "from": "challenger-splitflap",
+          "raise": "Las filas nunca se reacomodan: una respuesta cambia el teñido de su fila sin mover la columna."
+        },
+        {
+          "from": "challenger-feed",
+          "raise": "En el celular, una invitación abierta ocupa la pantalla con sus acciones al alcance del pulgar."
+        }
+      ]
+    },
+    {
+      "id": "model-pick",
+      "label": "Tarjetas de mesa",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "Escort cards dobladas sobre la mesa de bienvenida",
+      "thesis": "Cada invitado es una tarjeta doblada con su nombre y su mesa; el panel es la mesa de bienvenida.",
+      "palette": [
+        "#f4efe4",
+        "#2b3653",
+        "#6b1620",
+        "#c9a227"
+      ],
+      "materials": [
+        "cartulina de algodón",
+        "caligrafía",
+        "lacre"
+      ],
+      "viewport": "Una cuadrícula de tarjetas dobladas con nombre caligráfico y número de mesa; el estado es un sello de lacre en la esquina.",
+      "risk": "Es la lectura más previsible de una boda: papel crema, caligrafía y lacre, el lugar donde caen casi todos los diseños."
+    },
+    {
+      "id": "challenger-ticket",
+      "label": "Boletos sellados",
+      "verdict": "competitive",
+      "lineage": "Billeteras de boletos aéreos de los años 60",
+      "thesis": "Cada invitación es un cupón con su contraseña impresa; la respuesta se sella sobre él.",
+      "palette": [
+        "#2b3653",
+        "#6b1620",
+        "#fbfaf6",
+        "#5a3f7a"
+      ],
+      "materials": [
+        "papel de cupón",
+        "copia al carbón",
+        "sello de goma"
+      ],
+      "viewport": "Cupones apilados con cabecera tabulada; CONFIRMADO o NO ASISTIRÁ estampado en tinta sobre cada uno.",
+      "case": "Gana en claridad (los sellos hacen el estado inconfundible) pero los novios no se reconocen en un boleto de avión.",
+      "risk": "Sin rigor en la cuadrícula se vuelve disfraz retro.",
+      "hero": "https://impeccable.style/worlds/cards/vernacular-ephemera-jet-age-ticket-wallet-hero.webp"
+    },
+    {
+      "id": "challenger-lexicon",
+      "label": "Página de léxico",
+      "verdict": "declined",
+      "lineage": "Diccionarios del siglo XIX con láminas",
+      "thesis": "La lista como diccionario: palabras guía arriba y color encerrado en láminas.",
+      "palette": [
+        "#1b1b1b",
+        "#f3ead8",
+        "#c0392b"
+      ],
+      "materials": [
+        "tinta de grabado",
+        "papel sin estucar"
+      ],
+      "viewport": "Columna de nombres con palabras guía en la cabecera.",
+      "case": "Pierde en ambos ejes: los novios no se reconocen en un diccionario.",
+      "risk": "Lectura académica, fría para una boda.",
+      "kept": "El color solo vive donde significa algo.",
+      "hero": "https://impeccable.style/worlds/cards/rw-lexicon-shoulder-and-plate-hero.webp"
+    },
+    {
+      "id": "challenger-timetable",
+      "label": "Horario de bolsillo",
+      "verdict": "declined",
+      "lineage": "Horarios aéreos de bolsillo de 1971",
+      "thesis": "Todo a un solo tamaño de letra; el rango lo dan peso, caja y filete.",
+      "palette": [
+        "#d8a33a",
+        "#1b1b1b",
+        "#f5efdf",
+        "#2f6b4f"
+      ],
+      "materials": [
+        "vidrio teñido",
+        "cartulina dorada"
+      ],
+      "viewport": "Columnas inclinadas de horarios sobre luz.",
+      "case": "Pierde en ambos ejes: inclinado e iluminado, se aleja de la boda y de la tarea.",
+      "risk": "La inclinación complica la lectura en celular.",
+      "kept": "Un solo tamaño de letra en las filas.",
+      "hero": "https://impeccable.style/worlds/cards/rw-timetable-slide-rack-hero.webp"
+    },
+    {
+      "id": "challenger-splitflap",
+      "label": "Tablero de estación",
+      "verdict": "declined",
+      "lineage": "Tableros de paletas de las estaciones de tren",
+      "thesis": "Filas vivas en columnas que nunca se mueven.",
+      "palette": [
+        "#111111",
+        "#f2f2f2",
+        "#e0a030",
+        "#8a2a2a"
+      ],
+      "materials": [
+        "paletas mate",
+        "acero cepillado"
+      ],
+      "viewport": "Tablero negro de llegadas con los invitados como filas.",
+      "case": "Pierde en ambos ejes: frío y ruidoso para una boda.",
+      "risk": "Se lee como transporte, no como celebración.",
+      "kept": "El estado cambia la fila sin romper la columna.",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-split-flap-concourse-hero.webp"
+    },
+    {
+      "id": "challenger-feed",
+      "label": "Feed vertical",
+      "verdict": "declined",
+      "lineage": "Videos verticales a pantalla completa",
+      "thesis": "Un invitado por pantalla, acciones apiladas a la derecha.",
+      "palette": [
+        "#000000",
+        "#ffffff"
+      ],
+      "materials": [
+        "pantalla completa",
+        "velo inferior"
+      ],
+      "viewport": "Un invitado ocupa toda la pantalla.",
+      "case": "Pierde en ambos ejes: imposible revisar una lista de cien invitados de a uno.",
+      "risk": "Esconde el panorama general.",
+      "kept": "En el celular, lo abierto ocupa la pantalla con acciones al pulgar.",
+      "hero": "https://impeccable.style/worlds/cards/pop-culture-shelf-vertical-video-feed-surface-hero.webp"
+    },
+    {
+      "id": "challenger-bitmap",
+      "label": "Espécimen bitmap",
+      "verdict": "declined",
+      "lineage": "Especímenes tipográficos de Emigre",
+      "thesis": "Letras de píxel a escala de afiche.",
+      "palette": [
+        "#ffffff",
+        "#000000",
+        "#ff3b00"
+      ],
+      "materials": [
+        "píxel",
+        "trama de puntos"
+      ],
+      "viewport": "Un número gigante en píxeles sobre columnas densas.",
+      "case": "Pierde en ambos ejes: estética digital ajena a la boda.",
+      "risk": "Ilegible para usuarios no técnicos.",
+      "kept": "La misma unidad se repite a toda escala.",
+      "hero": "https://impeccable.style/worlds/cards/emigre-bitmap-specimen-hero.webp"
+    }
+  ],
+  "reroll": {
+    "registers": [
+      "safer",
+      "bolder"
+    ]
+  },
+  "buildPath": {
+    "value": "code",
+    "toggle": false
+  },
+  "canon": true,
+  "canonCard": {
+    "label": "El panel estándar",
+    "thesis": "Lo que entrega esta categoría, hecho con oficio impecable.",
+    "palette": [
+      "#ffffff",
+      "#111827",
+      "#2b3653"
+    ],
+    "materials": [
+      "barra lateral",
+      "tarjetas de estadísticas",
+      "tabla de datos"
+    ],
+    "viewport": "Barra lateral, cuatro tarjetas de totales y una tabla de invitados.",
+    "risk": "Indistinguible de cualquier panel, por diseño."
+  },
+  "steer": true
+}

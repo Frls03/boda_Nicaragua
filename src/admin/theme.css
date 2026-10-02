@@ -1,0 +1,163 @@
+/* Sistema visual del panel de los novios.
+   Panel estandar (navegacion, resumen, tabla) con los colores de la boda:
+   azul marino para texto y accion, corinto solo como marca y seleccion.
+   Todo vive bajo .adm-theme para no tocar la invitacion (Tailwind). */
+.adm-theme {
+  /* Tinta y marca */
+  --ink:          #1d2436;
+  --navy:         #2b3653;
+  --navy-hover:   #222b43;
+  --navy-soft:    #eef0f5;
+  --corinto:      #6b1620;
+  --corinto-soft: #f7eeef;
+
+  /* Neutros calidos */
+  --bg:           #f6f4ef;
+  --surface:      #ffffff;
+  --surface-2:    #faf8f4;
+  --line:         #e6e1d7;
+  --line-strong:  #d5cdbf;
+  --text:         #1d2436;
+  --text-2:       #555c6e;
+  --text-3:       #868b98;
+
+  /* Estados de asistencia: siempre los mismos tres en todo el panel */
+  --ok:           #2f6b4f;
+  --ok-soft:      #e7f1eb;
+  --wait:         #93640f;
+  --wait-soft:    #f8efdc;
+  --no:           #6e6860;
+  --no-soft:      #efece7;
+  --danger:       #a3242f;
+  --danger-soft:  #fbecec;
+
+  /* Tipo: Montserrat para toda la interfaz, Cormorant solo en titulos */
+  --font-ui:      'Montserrat', system-ui, sans-serif;
+  --font-title:   'Cormorant Garamond', Georgia, serif;
+
+  /* Forma */
+  --r-sm:   8px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-full: 999px;
+
+  /* Profundidad: offset y blur suave, teñida de tinta */
+  --shadow-1: 0 1px 2px rgba(29, 36, 54, 0.05);
+  --shadow-2: 0 1px 2px rgba(29, 36, 54, 0.04), 0 6px 18px -8px rgba(29, 36, 54, 0.12);
+  --shadow-3: 0 2px 6px rgba(29, 36, 54, 0.06), 0 24px 48px -16px rgba(29, 36, 54, 0.24);
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --t-fast: 140ms var(--ease);
+  --t-med: 220ms var(--ease);
+
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 1.5;
+  font-feature-settings: 'lnum' 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  accent-color: var(--navy);
+  caret-color: var(--navy);
+}
+
+/* :where() deja estas reglas base en especificidad cero: cualquier clase
+   de componente (p. ej. el blanco de .gt-btn-primary) las sobrescribe. */
+:where(.adm-theme) :where(button, input, select, textarea) {
+  font-family: var(--font-ui);
+  color: inherit;
+}
+
+:where(.adm-theme) :where(button) {
+  cursor: pointer;
+}
+
+:where(.adm-theme) :where(button:disabled) {
+  cursor: not-allowed;
+}
+
+/* Numeros alineados en tablas, contadores y badges */
+.adm-theme .tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Superficies del navegador: tambien llevan el diseño */
+.adm-theme ::selection {
+  background: rgba(43, 54, 83, 0.16);
+  color: var(--ink);
+}
+
+.adm-theme :focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
+  border-radius: var(--r-sm);
+}
+
+.adm-theme * {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+.adm-theme ::-webkit-scrollbar { width: 10px; height: 10px; }
+.adm-theme ::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: var(--r-full);
+  border: 3px solid var(--bg);
+}
+.adm-theme ::-webkit-scrollbar-track { background: transparent; }
+
+.adm-theme input::placeholder,
+.adm-theme textarea::placeholder {
+  color: var(--text-3);
+}
+
+/* ─── Piezas compartidas ─────────────────────────────────────────────────── */
+
+.adm-section-title {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.adm-section-subtitle {
+  margin: 0.35rem 0 0;
+  color: var(--text-2);
+  font-size: 0.875rem;
+  max-width: 62ch;
+}
+
+.adm-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-1);
+}
+
+/* Icono de Phosphor dentro de botones: hereda color y no captura clics */
+.adm-theme .ic {
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .adm-theme *,
+  .adm-theme *::before,
+  .adm-theme *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .adm-section-title {
+    font-size: 1.7rem;
+  }
+}

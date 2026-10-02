@@ -1,14 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getRsvpStatus, submitRsvp, formatDateEs } from '../lib/api';
-
-const LOCAL_KEY = 'jj-rsvp-2027';
-const token = new URLSearchParams(window.location.search).get('g');
-// Tope de adultos por invitacion. Cuando el backend exponga el max attendees
-// de cada invitado, reemplazar este valor por el que devuelva la API.
-const DEFAULT_MAX_GUESTS = 4;
-
-// El contrato de submitRsvp espera "N persona(s)", no un numero.
-const guestLabel = (n) => `${n} ${n === 1 ? 'persona' : 'personas'}`;
+import { useState } from 'react';
+import { formatDate, submitRsvp } from '../data/wedding';
 
 const pill =
   'w-full rounded-full border border-[#8a7a6a]/40 bg-white/55 px-5 py-2.5 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-ink backdrop-blur-[2px] transition-colors duration-300';
@@ -16,50 +7,42 @@ const pill =
 const stepBtn =
   'grid h-10 w-10 place-items-center rounded-full border border-[#8a7a6a]/40 bg-white/55 font-serif text-[22px] leading-none text-ink transition-colors duration-300 enabled:hover:border-maroon enabled:hover:text-maroon disabled:opacity-35 lg:h-14 lg:w-14 lg:text-[30px]';
 
-export default function Rsvp() {
-  const [choice, setChoice] = useState(null);
-  const maxGuests = DEFAULT_MAX_GUESTS;
-  const [guests, setGuests] = useState(Math.min(2, maxGuests));
-  const [notes, setNotes] = useState('');
-  const [confirmed, setConfirmed] = useState(null);
+const adultos = (n) => `${n} ${n === 1 ? 'adulto' : 'adultos'}`;
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const status = await getRsvpStatus(token);
-        if (status) {
-          setConfirmed(status);
-          return;
-        }
-      } catch (err) {
-        console.warn('No se pudo consultar el backend:', err.message);
-      }
-      const local = localStorage.getItem(LOCAL_KEY);
-      if (local) setConfirmed(JSON.parse(local));
-    })();
-  }, []);
+// RSVP del invitado identificado. El maximo de adultos viene de su fila en
+// Supabase (max_attendees, lo define el admin) y submit_rsvp lo vuelve a
+// validar en el servidor.
+export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
+  const maxGuests = Math.max(1, guest.maxAttendees ?? 1);
+  const [choice, setChoice] = useState(
+    guest.attendance === 'confirmed' ? 'yes' : guest.attendance === 'declined' ? 'no' : null
+  );
+  const [guests, setGuests] = useState(
+    Math.min(maxGuests, guest.attendanceCount > 0 ? guest.attendanceCount : maxGuests)
+  );
+  const [notes, setNotes] = useState(guest.notes ?? '');
+  const [editing, setEditing] = useState(guest.attendance === 'pending');
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   async function handleSubmit(e) {
     e.preventDefault();
     if (!choice) return;
 
-    const input = {
-      token,
-      attending: choice === 'yes',
-      guests: choice === 'yes' ? guestLabel(guests) : null,
-      notes,
-    };
-
+    setError('');
+    setSaving(true);
     try {
-      const result = await submitRsvp(input);
-      setConfirmed(result);
-    } catch (err) {
-      // ponytail: sin backend conectado todavía, se guarda local para previsualizar el flujo.
-      // Definí VITE_GRAPHQL_ENDPOINT y esto pasa a llamar tu API real automáticamente.
-      console.warn('GraphQL no disponible, guardando localmente:', err.message);
-      const fallback = { ...input, confirmedAt: formatDateEs(new Date()) };
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(fallback));
-      setConfirmed(fallback);
+      const updated = await submitRsvp(guest, {
+        attendance: choice === 'yes' ? 'confirmed' : 'declined',
+        attendanceCount: choice === 'yes' ? Math.min(Math.max(guests, 1), maxGuests) : 0,
+        notes: notes.trim(),
+      });
+      onGuestUpdate(updated);
+      setEditing(false);
+    } catch {
+      setError('No se pudo enviar tu confirmación. Intenta de nuevo.');
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -76,6 +59,20 @@ export default function Rsvp() {
         <span className="whitespace-nowrap font-semibold text-[#2b3653]">01 de marzo del 2027</span>
       </p>
 
+      <p className="mt-5 text-center text-[clamp(13px,3.2vw,15px)] text-[#5a4a3f] lg:mt-7 lg:text-[19px]">
+        Invitación para
+        <span className="mt-0.5 block font-serif font-semibold text-[#2b3653] text-[clamp(20px,5vw,26px)] lg:text-[34px]">
+          {guest.fullName}
+        </span>
+        <button
+          type="button"
+          onClick={onChangeGuest}
+          className="mt-1 text-[clamp(11px,2.8vw,13px)] underline decoration-[#8a7a6a]/50 underline-offset-4 transition-colors hover:text-maroon lg:text-[15px]"
+        >
+          ¿No eres tú?
+        </button>
+      </p>
+
       {/* Aviso "solo adultos": sin caja, sobre el papel. Lo hace visible el
           titulo caligrafico grande y el aire alrededor. */}
       <aside aria-label="Celebración solo para adultos" className="mx-auto mb-10 mt-9 max-w-[360px] text-center lg:mb-14 lg:mt-12 lg:max-w-[560px]">
@@ -85,6 +82,28 @@ export default function Rsvp() {
         </p>
       </aside>
 
+      {!editing ? (
+        <div className="text-center" role="status">
+          <p className="font-script leading-[1.1] text-maroon text-[clamp(34px,8.5vw,44px)] lg:text-[58px]">
+            {guest.attendance === 'confirmed' ? '¡Gracias por confirmar!' : 'Gracias por avisarnos'}
+          </p>
+          <p className="mx-auto mt-3 max-w-[32ch] font-serif leading-snug text-ink text-[clamp(15px,3.7vw,17px)] lg:mt-4 lg:text-[22px]">
+            {guest.attendance === 'confirmed'
+              ? `Te esperamos: ${adultos(guest.attendanceCount)}.`
+              : 'Lamentamos que no puedas acompañarnos. Te tendremos presente.'}
+          </p>
+          <p className="mt-2 text-[clamp(12px,3vw,14px)] text-[#8a7a6a] lg:text-[17px]">
+            Respuesta del {formatDate(guest.updatedAt)}
+          </p>
+          <button
+            type="button"
+            onClick={() => setEditing(true)}
+            className="mx-auto mt-6 rounded-full border border-[#2b3653] px-8 py-2.5 text-[10px] font-medium tracking-[.2em] text-[#2b3653] transition-colors duration-300 hover:bg-[#2b3653] hover:text-cream lg:mt-8 lg:px-12 lg:py-3 lg:text-[13px]"
+          >
+            CAMBIAR MI RESPUESTA
+          </button>
+        </div>
+      ) : (
       <form onSubmit={handleSubmit} className="flex flex-col gap-2.5 lg:gap-4">
         <button
           type="button"
@@ -102,6 +121,12 @@ export default function Rsvp() {
           No podré asistir
         </button>
 
+        {maxGuests === 1 ? (
+          <p className={`mt-2 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f] transition-opacity duration-300 ${choice === 'yes' ? '' : 'opacity-45'}`}>
+            Tu invitación es para 1 adulto.
+          </p>
+        ) : (
+        <>
         <p id="rsvp-guests" className="mt-2 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f]">
           ¿Cuántos adultos asistirán?
         </p>
@@ -143,6 +168,8 @@ export default function Rsvp() {
             {guests === 1 ? 'adulto' : 'adultos'} · máximo {maxGuests}
           </p>
         </div>
+        </>
+        )}
 
         <p className="mt-2 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f]">Notas adicionales (opcional)</p>
 
@@ -153,22 +180,21 @@ export default function Rsvp() {
           className={`${pill} min-h-[46px] lg:min-h-[70px] resize-none placeholder:text-[#8a7a6a]`}
         />
 
-        {confirmed ? (
-          <p className="mt-3 text-center leading-relaxed text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f]">
-            Ya confirmaste tu asistencia el
-            <br />
-            {confirmed.confirmedAt}
+        {error && (
+          <p role="alert" className="mt-2 text-center text-[clamp(13px,3.2vw,15px)] text-maroon lg:text-[17px]">
+            {error}
           </p>
-        ) : (
-          <button
-            type="submit"
-            disabled={!choice}
-            className="mx-auto mt-3 rounded-full bg-[#2b3653] px-10 py-2.5 text-[10px] lg:mt-6 lg:px-16 lg:py-4 lg:text-[13px] font-medium tracking-[.2em] text-cream transition-colors duration-300 hover:bg-maroon disabled:opacity-45 disabled:hover:bg-[#2b3653]"
-          >
-            CONFIRMAR
-          </button>
         )}
+
+        <button
+          type="submit"
+          disabled={!choice || saving}
+          className="mx-auto mt-3 rounded-full bg-[#2b3653] px-10 py-2.5 text-[10px] lg:mt-6 lg:px-16 lg:py-4 lg:text-[13px] font-medium tracking-[.2em] text-cream transition-colors duration-300 hover:bg-maroon active:scale-[0.98] disabled:opacity-45 disabled:hover:bg-[#2b3653]"
+        >
+          {saving ? 'ENVIANDO…' : 'CONFIRMAR'}
+        </button>
       </form>
+      )}
 
       <div className="mt-8 lg:mt-12">
         <Filete />

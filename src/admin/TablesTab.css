@@ -1,0 +1,721 @@
+/* Pestaña Mesas: mesas circulares con sillas, arrastrar para sentar */
+.tt-root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.tt-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.tt-btn-add-table,
+.tt-btn-save {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 38px;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(29, 36, 54, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.tt-btn-add-table:hover,
+.tt-btn-save:hover {
+  background: var(--navy-hover);
+}
+
+.tt-btn-add-table:active,
+.tt-btn-save:active {
+  transform: translateY(1px);
+}
+
+.tt-btn-cancel {
+  height: 38px;
+  padding: 0 0.95rem;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.tt-btn-cancel:hover {
+  background: rgba(29, 36, 54, 0.05);
+  color: var(--ink);
+}
+
+.tt-btn-del-confirm {
+  height: 34px;
+  padding: 0 0.85rem;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: var(--danger);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  transition: background var(--t-fast);
+}
+
+.tt-btn-del-confirm:hover {
+  background: #8c1d27;
+}
+
+/* ─── Resumen ────────────────────────────────────────────────────────────── */
+.tt-summary {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0;
+  padding: 0.7rem 0.4rem;
+}
+
+.tt-sum-item {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0 1rem;
+}
+
+.tt-sum-num {
+  font-family: var(--font-ui);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.tt-sum-num.warn { color: var(--wait); }
+.tt-sum-num.ok   { color: var(--ok); }
+
+.tt-sum-label {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-2);
+}
+
+.tt-sum-sep {
+  align-self: stretch;
+  width: 1px;
+  background: var(--line);
+}
+
+/* ─── Disposicion: panel "Sin asignar" + mesas ───────────────────────────── */
+.tt-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  align-items: start;
+  gap: 1.25rem;
+}
+
+.tt-sidebar {
+  position: sticky;
+  top: 1.25rem;
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.tt-sidebar-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tt-sidebar-head h3 {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tt-badge-count {
+  min-width: 1.6rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: var(--r-full);
+  background: var(--wait-soft);
+  color: var(--wait);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.tt-pool {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-height: 120px;
+  padding: 0.5rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--r-md);
+  background: var(--surface-2);
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.tt-pool.pool-over {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+}
+
+.tt-pool-chip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 40px;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid;
+  border-radius: var(--r-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--t-fast), box-shadow var(--t-fast), opacity var(--t-fast);
+}
+
+.tt-pool-chip:hover {
+  box-shadow: var(--shadow-2);
+  transform: translateY(-1px);
+}
+
+.tt-pool-chip.tt-dragging {
+  opacity: 0.35;
+  cursor: grabbing;
+}
+
+.tt-pool-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tt-pool-badge {
+  flex-shrink: 0;
+  padding: 0 0.4rem;
+  border-radius: var(--r-full);
+  background: rgba(255, 255, 255, 0.7);
+  font-size: 0.6875rem;
+  font-weight: 700;
+}
+
+.tt-pool-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: auto 0;
+  padding: 1rem 0;
+  color: var(--ok);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.tt-sidebar-hint {
+  margin: 0;
+  color: var(--text-3);
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* ─── Mesas ──────────────────────────────────────────────────────────────── */
+.tt-tables-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(296px, 1fr));
+  align-items: start;
+  gap: 1rem;
+}
+
+.tt-table-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-1);
+}
+
+.tt-table-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.tt-table-card-info {
+  min-width: 0;
+}
+
+.tt-table-card-name {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 1.35rem;
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--ink);
+}
+
+.tt-table-card-area {
+  margin: 0.15rem 0 0;
+  color: var(--text-3);
+  font-size: 0.75rem;
+}
+
+.tt-table-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.tt-seat-badge {
+  margin-right: 0.35rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: var(--r-full);
+  background: var(--navy-soft);
+  color: var(--navy);
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.tt-seat-badge.full {
+  background: var(--ok-soft);
+  color: var(--ok);
+}
+
+.tt-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-3);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.tt-icon-btn:hover {
+  background: rgba(29, 36, 54, 0.06);
+  color: var(--ink);
+}
+
+.tt-icon-btn.danger:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.tt-confirm-del {
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.75rem;
+  border-radius: var(--r-md);
+  background: var(--danger-soft);
+}
+
+.tt-confirm-del p {
+  margin: 0;
+  color: var(--ink);
+  font-size: 0.8125rem;
+}
+
+.tt-confirm-del-btns {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.4rem;
+}
+
+.tt-confirm-del .tt-btn-cancel {
+  height: 34px;
+}
+
+/* La mesa */
+.tt-circle-wrap {
+  position: relative;
+  margin: 0.25rem auto;
+}
+
+.tt-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.tt-surface {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 92px;
+  height: 92px;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--navy);
+  box-shadow: 0 8px 20px -8px rgba(29, 36, 54, 0.45);
+}
+
+.tt-surface span {
+  overflow: hidden;
+  color: #f4efe4;
+  font-family: var(--font-ui);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.1;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+/* Sillas */
+.tt-seat {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  transition: border-color var(--t-fast), background var(--t-fast), box-shadow var(--t-fast), transform var(--t-fast);
+}
+
+.tt-seat.empty {
+  border-style: dashed;
+  background: var(--surface-2);
+}
+
+.tt-seat.empty:hover {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+}
+
+.tt-seat.seat-over {
+  border: 1.5px solid var(--ok) !important;
+  background: var(--ok-soft) !important;
+  box-shadow: 0 0 0 4px rgba(47, 107, 79, 0.16);
+  transform: scale(1.08);
+}
+
+.tt-seat.seat-blocked {
+  border: 1.5px solid var(--danger) !important;
+  background: var(--danger-soft) !important;
+  box-shadow: 0 0 0 4px rgba(163, 36, 47, 0.12);
+  cursor: not-allowed;
+}
+
+.tt-seat-num {
+  color: var(--text-3);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.tt-seat-guest {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 4px;
+  overflow: hidden;
+  border-radius: var(--r-full);
+  color: inherit;
+  font-size: 0.625rem;
+  font-weight: 700;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  transition: filter var(--t-fast), opacity var(--t-fast);
+}
+
+.tt-seat-guest:hover {
+  filter: brightness(0.95);
+}
+
+.tt-seat-guest.tt-dragging {
+  opacity: 0.25;
+  cursor: grabbing;
+}
+
+.tt-table-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--line);
+}
+
+.tt-legend-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid;
+  border-radius: var(--r-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.tt-legend-chip em {
+  font-style: normal;
+  font-weight: 500;
+  opacity: 0.75;
+}
+
+/* Tarjeta para agregar mesa */
+.tt-add-card {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 0.5rem;
+  min-height: 200px;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--r-lg);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transition: border-color var(--t-fast), background var(--t-fast), color var(--t-fast);
+}
+
+.tt-add-card:hover {
+  border-color: var(--navy);
+  background: var(--navy-soft);
+  color: var(--navy);
+}
+
+.tt-add-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--surface);
+  box-shadow: var(--shadow-1), inset 0 0 0 1px var(--line);
+}
+
+/* Lo que se arrastra */
+.tt-drag-ghost {
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--r-full);
+  background: var(--navy);
+  color: #fff;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: var(--shadow-3);
+  transform: rotate(-2deg) scale(1.04);
+  pointer-events: none;
+}
+
+/* ─── Formulario de mesa ─────────────────────────────────────────────────── */
+.tt-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(29, 36, 54, 0.38);
+  animation: gt-fade 180ms var(--ease);
+}
+
+.tt-modal {
+  width: min(420px, 100%);
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-3);
+  animation: gt-rise 240ms var(--ease);
+}
+
+.tt-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.25rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.tt-modal-header h2 {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.tt-modal-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--text-3);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.tt-modal-close:hover {
+  background: rgba(29, 36, 54, 0.06);
+  color: var(--ink);
+}
+
+.tt-modal-body {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+}
+
+.tt-form-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.tt-form-field label {
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.tt-form-field input {
+  width: 100%;
+  height: 42px;
+  padding: 0 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.tt-form-field input:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(43, 54, 83, 0.14);
+}
+
+.tt-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  margin: 0.25rem -1.25rem -1.25rem;
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--line);
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+  background: var(--surface-2);
+}
+
+/* ─── Tablet y celular ───────────────────────────────────────────────────── */
+@media (max-width: 1000px) {
+  .tt-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tt-sidebar {
+    position: static;
+  }
+
+  .tt-pool {
+    flex-direction: row;
+    flex-wrap: wrap;
+    min-height: 64px;
+  }
+
+  .tt-pool-chip {
+    flex: 0 1 auto;
+  }
+}
+
+@media (max-width: 720px) {
+  .tt-page-header {
+    align-items: stretch;
+  }
+
+  .tt-btn-add-table {
+    width: 100%;
+    height: 44px;
+  }
+
+  .tt-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.6rem 0;
+    padding: 0.8rem 0.25rem;
+  }
+
+  .tt-sum-item {
+    padding: 0 0.75rem;
+  }
+
+  .tt-sum-sep {
+    display: none;
+  }
+
+  .tt-tables-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .tt-table-card {
+    padding: 0.75rem;
+  }
+
+  .tt-modal-backdrop {
+    place-items: end stretch;
+    padding: 0;
+  }
+
+  .tt-modal {
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .tt-modal-actions {
+    border-radius: 0;
+    padding-bottom: calc(0.9rem + env(safe-area-inset-bottom));
+  }
+
+  .tt-modal-actions > button {
+    flex: 1;
+    height: 46px;
+  }
+
+  .tt-form-field input {
+    font-size: 1rem;
+  }
+}

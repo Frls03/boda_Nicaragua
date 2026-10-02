@@ -1,0 +1,552 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-02T02:15:41.012Z",
+  "title": "Design System: Boda Jonathan & Jasmin — Panel de los novios",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink",
+        "canonical": "#1d2436",
+        "tonalRamp": [
+          "#050a1a",
+          "#1d2436",
+          "#3a4255",
+          "#586176",
+          "#798298",
+          "#9ba5bc",
+          "#bfc9e1",
+          "#e8eeff"
+        ]
+      },
+      "navy": {
+        "role": "primary",
+        "displayName": "Wedding Navy",
+        "canonical": "#2b3653",
+        "tonalRamp": [
+          "#030821",
+          "#1a243f",
+          "#35415f",
+          "#546080",
+          "#7482a3",
+          "#96a5c8",
+          "#bac9ed",
+          "#e8eeff"
+        ]
+      },
+      "navy-hover": {
+        "role": "primary",
+        "displayName": "Pressed Navy",
+        "canonical": "#222b43",
+        "tonalRamp": [
+          "#04091e",
+          "#1b243b",
+          "#37415b",
+          "#56617c",
+          "#76829f",
+          "#99a5c3",
+          "#bcc9e8",
+          "#e8eeff"
+        ]
+      },
+      "navy-soft": {
+        "role": "primary",
+        "displayName": "Navy Mist",
+        "canonical": "#eef0f5",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#242529",
+          "#404246",
+          "#5f6165",
+          "#808287",
+          "#a3a5aa",
+          "#c7c9ce",
+          "#eceef3"
+        ]
+      },
+      "corinto": {
+        "role": "secondary",
+        "displayName": "Corinto",
+        "canonical": "#6b1620",
+        "tonalRamp": [
+          "#1f0003",
+          "#4a0410",
+          "#741f27",
+          "#994145",
+          "#bf6365",
+          "#e58687",
+          "#fcb4b3",
+          "#ffe8e8"
+        ]
+      },
+      "wedding-cream": {
+        "role": "secondary",
+        "displayName": "Wedding Cream",
+        "canonical": "#f4efe4",
+        "tonalRamp": [
+          "#0e0b05",
+          "#28251c",
+          "#464239",
+          "#656157",
+          "#868278",
+          "#a9a59a",
+          "#cdc9be",
+          "#f3eee3"
+        ]
+      },
+      "bg": {
+        "role": "neutral",
+        "displayName": "Warm Paper",
+        "canonical": "#f6f4ef",
+        "tonalRamp": [
+          "#0c0b08",
+          "#262521",
+          "#43423e",
+          "#63615d",
+          "#84827e",
+          "#a7a5a0",
+          "#cbc9c4",
+          "#f0eee9"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Surface",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "surface-2": {
+        "role": "neutral",
+        "displayName": "Linen",
+        "canonical": "#faf8f4",
+        "tonalRamp": [
+          "#0c0b09",
+          "#262522",
+          "#43423f",
+          "#63615e",
+          "#84827e",
+          "#a7a5a1",
+          "#cbc9c5",
+          "#f0eeea"
+        ]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "#e6e1d7",
+        "tonalRamp": [
+          "#0e0b05",
+          "#28251d",
+          "#464239",
+          "#656158",
+          "#868279",
+          "#a9a49b",
+          "#cdc9bf",
+          "#f3eee4"
+        ]
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "#d5cdbf",
+        "tonalRamp": [
+          "#100a03",
+          "#2a2419",
+          "#484135",
+          "#676054",
+          "#898174",
+          "#aca497",
+          "#d0c8ba",
+          "#f6eddf"
+        ]
+      },
+      "text-2": {
+        "role": "neutral",
+        "displayName": "Slate",
+        "canonical": "#555c6e",
+        "tonalRamp": [
+          "#060a18",
+          "#1f2534",
+          "#3b4253",
+          "#5a6173",
+          "#7b8295",
+          "#9da5b9",
+          "#c1c9de",
+          "#e8eefe"
+        ]
+      },
+      "text-3": {
+        "role": "neutral",
+        "displayName": "Mist Grey",
+        "canonical": "#868b98",
+        "tonalRamp": [
+          "#080b14",
+          "#21252f",
+          "#3d424d",
+          "#5c616d",
+          "#7d828f",
+          "#a0a5b2",
+          "#c4c9d7",
+          "#e9eefd"
+        ]
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Sage",
+        "canonical": "#2f6b4f",
+        "tonalRamp": [
+          "#000f07",
+          "#032d1c",
+          "#0c4e34",
+          "#336f53",
+          "#559173",
+          "#78b595",
+          "#9cd9b9",
+          "#c5fedf"
+        ]
+      },
+      "ok-soft": {
+        "role": "tertiary",
+        "displayName": "Sage Wash",
+        "canonical": "#e7f1eb",
+        "tonalRamp": [
+          "#070d09",
+          "#202723",
+          "#3c4440",
+          "#5b645f",
+          "#7c8580",
+          "#9ea8a2",
+          "#c2ccc6",
+          "#e7f1eb"
+        ]
+      },
+      "wait": {
+        "role": "tertiary",
+        "displayName": "Amber",
+        "canonical": "#93640f",
+        "tonalRamp": [
+          "#130900",
+          "#352000",
+          "#5a3b03",
+          "#82580a",
+          "#a8782b",
+          "#cd9b51",
+          "#f3bf75",
+          "#ffebd1"
+        ]
+      },
+      "wait-soft": {
+        "role": "tertiary",
+        "displayName": "Amber Wash",
+        "canonical": "#f8efdc",
+        "tonalRamp": [
+          "#100a01",
+          "#2b2416",
+          "#484132",
+          "#686050",
+          "#8a8170",
+          "#ada492",
+          "#d1c8b6",
+          "#f7eedb"
+        ]
+      },
+      "no": {
+        "role": "tertiary",
+        "displayName": "Stone",
+        "canonical": "#6e6860",
+        "tonalRamp": [
+          "#0f0a05",
+          "#29241d",
+          "#47413a",
+          "#666058",
+          "#888179",
+          "#aaa49b",
+          "#cfc8bf",
+          "#f4ede4"
+        ]
+      },
+      "no-soft": {
+        "role": "tertiary",
+        "displayName": "Stone Wash",
+        "canonical": "#efece7",
+        "tonalRamp": [
+          "#0d0b08",
+          "#272521",
+          "#44423e",
+          "#63615d",
+          "#85827d",
+          "#a7a5a0",
+          "#ccc9c4",
+          "#f1eee9"
+        ]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Danger Red",
+        "canonical": "#a3242f",
+        "tonalRamp": [
+          "#1e0002",
+          "#4a050d",
+          "#7f041a",
+          "#aa2c35",
+          "#d25255",
+          "#fa7676",
+          "#ffb2af",
+          "#fee9e7"
+        ]
+      },
+      "danger-soft": {
+        "role": "tertiary",
+        "displayName": "Danger Blush",
+        "canonical": "#fbecec",
+        "tonalRamp": [
+          "#110809",
+          "#2d2222",
+          "#4a3f3f",
+          "#6a5e5e",
+          "#8c7f7f",
+          "#afa1a1",
+          "#d4c5c5",
+          "#f9eaea"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Only the total-people count in Respuestas."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section titles and the login title."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Dialog titles, table-card names, sidebar names, phone top-bar title."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "All interface text, lining figures; tabular on counts."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, column headers, badges, tab labels; sentence case."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Guest passwords only."
+      }
+    },
+    "shadows": [
+      {
+        "name": "shadow-1",
+        "value": "0 1px 2px rgba(29, 36, 54, 0.05)",
+        "purpose": "Rest: cards, secondary buttons, active nav, active segment."
+      },
+      {
+        "name": "shadow-2",
+        "value": "0 1px 2px rgba(29, 36, 54, 0.04), 0 6px 18px -8px rgba(29, 36, 54, 0.12)",
+        "purpose": "Raised: hover lift on draggable guest chips."
+      },
+      {
+        "name": "shadow-3",
+        "value": "0 2px 6px rgba(29, 36, 54, 0.06), 0 24px 48px -16px rgba(29, 36, 54, 0.24)",
+        "purpose": "Overlay: dialogs, bottom sheets, login card."
+      },
+      {
+        "name": "focus-halo",
+        "value": "0 0 0 3px rgba(43, 54, 83, 0.14)",
+        "purpose": "Focused inputs, with navy border."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Single easing for all transitions."
+      },
+      {
+        "name": "t-fast",
+        "value": "140ms",
+        "purpose": "Hover, color and press transitions."
+      },
+      {
+        "name": "t-med",
+        "value": "220ms",
+        "purpose": "Larger state changes."
+      },
+      {
+        "name": "sheet-in",
+        "value": "280ms",
+        "purpose": "Bottom-sheet slide-up under 720px."
+      },
+      {
+        "name": "bar-grow",
+        "value": "500ms",
+        "purpose": "Response bar segment growth."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "0.01ms",
+        "purpose": "All durations collapse under prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "phone-sm",
+        "value": "640px"
+      },
+      {
+        "name": "sheet",
+        "value": "720px"
+      },
+      {
+        "name": "shell",
+        "value": "860px"
+      },
+      {
+        "name": "tables-grid",
+        "value": "1000px"
+      },
+      {
+        "name": "table-cols",
+        "value": "1100px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one main action per view (Agregar invitado, Crear mesa, Entrar).",
+      "html": "<div class=\"ds-root\"><button class=\"ds-btn-primary\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M224 128a8 8 0 0 1-8 8h-80v80a8 8 0 0 1-16 0v-80H40a8 8 0 0 1 0-16h80V40a8 8 0 0 1 16 0v80h80a8 8 0 0 1 8 8Z\"/></svg>Agregar invitado</button></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;height:38px;padding:0 .95rem;border-radius:var(--r-sm);font:600 .8125rem Montserrat,system-ui,sans-serif;cursor:pointer;transition:background 140ms var(--ease),border-color 140ms var(--ease),transform 140ms var(--ease);border:0;background:var(--navy);color:#fff;box-shadow:0 1px 2px rgba(29,36,54,.2),inset 0 1px 0 rgba(255,255,255,.08)}.ds-btn-primary:hover{background:var(--navy-hover)}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--navy);outline-offset:2px}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Supporting actions beside the primary (Plantilla, Importar Excel).",
+      "html": "<div class=\"ds-root\"><button class=\"ds-btn-secondary\">Importar Excel</button></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-btn-secondary{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;height:38px;padding:0 .95rem;border-radius:var(--r-sm);font:600 .8125rem Montserrat,system-ui,sans-serif;cursor:pointer;transition:background 140ms var(--ease),border-color 140ms var(--ease),transform 140ms var(--ease);border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);box-shadow:var(--shadow-1)}.ds-btn-secondary:hover{border-color:#c3baa9;background:var(--surface-2)}.ds-btn-secondary:active{transform:translateY(1px)}.ds-btn-secondary:focus-visible{outline:2px solid var(--navy);outline-offset:2px}"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Cancel and low-weight actions.",
+      "html": "<div class=\"ds-root\"><button class=\"ds-btn-ghost\">Cancelar</button></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-btn-ghost{display:inline-flex;align-items:center;justify-content:center;gap:.45rem;height:38px;padding:0 .95rem;border-radius:var(--r-sm);font:600 .8125rem Montserrat,system-ui,sans-serif;cursor:pointer;transition:background 140ms var(--ease),border-color 140ms var(--ease),transform 140ms var(--ease);border:0;background:transparent;color:var(--text-2)}.ds-btn-ghost:hover{background:rgba(29,36,54,.05);color:var(--ink)}.ds-btn-ghost:active{transform:translateY(1px)}.ds-btn-ghost:focus-visible{outline:2px solid var(--navy);outline-offset:2px}"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Form field with label above; navy border and halo on focus.",
+      "html": "<div class=\"ds-root\"><label class=\"ds-field\"><span class=\"ds-label\">Nombre del invitado</span><input class=\"ds-input\" placeholder=\"Ej. Familia López\"></label></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-field{display:grid;gap:.35rem;max-width:320px}.ds-label{font-size:.8125rem;font-weight:600;color:var(--ink)}.ds-input{height:42px;padding:0 .8rem;border:1px solid var(--line-strong);border-radius:var(--r-sm);background:var(--surface);font:400 .9375rem Montserrat,system-ui,sans-serif;color:var(--ink);transition:border-color 140ms var(--ease),box-shadow 140ms var(--ease)}.ds-input::placeholder{color:var(--text-3)}.ds-input:hover{border-color:#c3baa9}.ds-input:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(43,54,83,.14)}"
+    },
+    {
+      "name": "Filter Pills",
+      "kind": "chip",
+      "refersTo": "filter-pill",
+      "description": "Status filters with dot and tabular count; active is navy.",
+      "html": "<div class=\"ds-root ds-pills\"><button class=\"ds-pill active\">Todos <span class=\"ds-count\">48</span></button><button class=\"ds-pill\"><span class=\"ds-dot\" style=\"background:var(--ok)\"></span>Confirmados <span class=\"ds-count\">21</span></button><button class=\"ds-pill\"><span class=\"ds-dot\" style=\"background:var(--wait)\"></span>Pendientes <span class=\"ds-count\">19</span></button><button class=\"ds-pill\"><span class=\"ds-dot\" style=\"background:var(--no)\"></span>No vienen <span class=\"ds-count\">8</span></button></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-pills{display:flex;gap:.4rem;flex-wrap:wrap}.ds-pill{display:inline-flex;align-items:center;gap:.4rem;height:34px;padding:0 .8rem;border:1px solid var(--line);border-radius:var(--r-full);background:var(--surface);color:var(--text-2);font:500 .8125rem Montserrat,system-ui,sans-serif;cursor:pointer;transition:background 140ms var(--ease),color 140ms var(--ease)}.ds-pill:hover{border-color:var(--line-strong);color:var(--ink)}.ds-pill.active{border-color:var(--navy);background:var(--navy);color:#fff}.ds-pill:focus-visible{outline:2px solid var(--navy);outline-offset:2px}.ds-count{padding:0 .35rem;border-radius:var(--r-full);background:rgba(29,36,54,.07);font-size:.6875rem;font-weight:600;font-variant-numeric:tabular-nums}.ds-pill.active .ds-count{background:rgba(255,255,255,.18)}.ds-dot{width:7px;height:7px;border-radius:50%}"
+    },
+    {
+      "name": "Status Badges",
+      "kind": "chip",
+      "refersTo": "status-badge-confirmed",
+      "description": "The three fixed attendance states.",
+      "html": "<div class=\"ds-root ds-badges\"><span class=\"ds-badge ok\">Confirmado</span><span class=\"ds-badge wait\">Pendiente</span><span class=\"ds-badge no\">No asistirá</span></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-badges{display:flex;gap:.5rem}.ds-badge{display:inline-flex;align-items:center;padding:.2rem .6rem;border-radius:var(--r-full);font:600 .75rem Montserrat,system-ui,sans-serif}.ds-badge.ok{background:var(--ok-soft);color:var(--ok)}.ds-badge.wait{background:var(--wait-soft);color:var(--wait)}.ds-badge.no{background:var(--no-soft);color:var(--no)}"
+    },
+    {
+      "name": "Sidebar Navigation",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Desktop 248px Linen sidebar; active item is a white tile with corinto icon.",
+      "html": "<nav class=\"ds-root ds-side\"><button class=\"ds-nav active\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 256 256\" fill=\"currentColor\" aria-hidden=\"true\"><circle cx=\"128\" cy=\"96\" r=\"56\"/><path d=\"M32 216c16-40 56-64 96-64s80 24 96 64Z\"/></svg>Invitados</button><button class=\"ds-nav\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 256 256\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"16\" aria-hidden=\"true\"><circle cx=\"128\" cy=\"128\" r=\"88\"/><path d=\"M128 40v88l76 44\"/></svg>Respuestas</button><button class=\"ds-nav\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 256 256\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"16\" aria-hidden=\"true\"><path d=\"M64 120V64a24 24 0 0 1 24-24h80a24 24 0 0 1 24 24v56M40 120h176v48H40ZM64 168v48M192 168v48\"/></svg>Mesas</button></nav>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-side{display:flex;flex-direction:column;gap:2px;width:220px;padding:.9rem;background:var(--surface-2);border-right:1px solid var(--line)}.ds-nav{display:flex;align-items:center;gap:.7rem;min-height:40px;padding:.5rem .75rem;border:0;border-radius:var(--r-sm);background:transparent;color:var(--text-2);font:500 .875rem Montserrat,system-ui,sans-serif;text-align:left;cursor:pointer;transition:background 140ms var(--ease),color 140ms var(--ease)}.ds-nav:hover{background:rgba(29,36,54,.05);color:var(--ink)}.ds-nav.active{background:var(--surface);color:var(--ink);font-weight:600;box-shadow:var(--shadow-1),inset 0 0 0 1px var(--line)}.ds-nav.active svg{color:var(--corinto)}.ds-nav:focus-visible{outline:2px solid var(--navy);outline-offset:2px}"
+    },
+    {
+      "name": "Response Summary",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Signature: serif headline count plus one proportional sage/amber/stone bar.",
+      "html": "<div class=\"ds-root\"><section class=\"ds-card\"><div class=\"ds-head\"><p class=\"ds-big\">64</p><div><p class=\"ds-big-label\">personas vienen</p><p class=\"ds-sub\">de 112 invitadas</p></div></div><div class=\"ds-bar\"><span style=\"flex-grow:64;background:var(--ok)\"></span><span style=\"flex-grow:36;background:#d9a441\"></span><span style=\"flex-grow:12;background:#b5aea4\"></span></div></section></div>",
+      "css": ".ds-root{--ink:#1d2436;--navy:#2b3653;--navy-hover:#222b43;--navy-soft:#eef0f5;--corinto:#6b1620;--bg:#f6f4ef;--surface:#fff;--surface-2:#faf8f4;--line:#e6e1d7;--line-strong:#d5cdbf;--text-2:#555c6e;--text-3:#868b98;--ok:#2f6b4f;--ok-soft:#e7f1eb;--wait:#93640f;--wait-soft:#f8efdc;--no:#6e6860;--no-soft:#efece7;--r-sm:8px;--r-md:12px;--r-lg:16px;--r-full:999px;--shadow-1:0 1px 2px rgba(29,36,54,.05);--ease:cubic-bezier(.22,1,.36,1);font-family:Montserrat,system-ui,sans-serif;font-size:14px;color:var(--ink);}.ds-card{display:grid;gap:1.25rem;max-width:520px;padding:1.5rem;background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-1)}.ds-head{display:flex;align-items:center;gap:1rem}.ds-big{margin:0;font:600 4rem/0.9 'Cormorant Garamond',Georgia,serif;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.ds-big-label{margin:0;font-size:1rem;font-weight:600}.ds-sub{margin:.15rem 0 0;font-size:.8125rem;color:var(--text-2)}.ds-bar{display:flex;gap:3px;height:14px;border-radius:var(--r-full);overflow:hidden;background:var(--no-soft)}.ds-bar span{flex-basis:0;min-width:6px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Wedding Planner's Desk",
+    "overview": "The category-standard dashboard (side navigation, a summary, a table) played straight, at the finish of Linear, Stripe Dashboard, Zola and Airbnb hosting, in a friendly register for two non-technical people managing their own wedding, mostly on a phone. Nothing is ironic or novel about the structure; the character comes from the wedding's own materials: warm off-white paper, navy ink, a single corinto mark, a serif reserved for titles.\n\nDensity is moderate: a 14px Montserrat base, 38–42px controls, generous card padding. White surfaces sit on warm paper with a hairline and a whisper of ink-tinted shadow. Attendance status is the one piece of color semantics, and it never changes: sage for coming, amber for waiting, stone for not coming. The login card adds a faint corinto radial glow (6% corinto) on the paper. The rejected reference is the copied predecessor panel: a dark blue slab with emoji and loose, unrelated cards.",
+    "keyCharacteristics": [
+      "Warm paper background, white surfaces, hairline borders, soft ink-tinted shadows.",
+      "Navy carries text and the primary action; corinto appears only as brand mark and selection.",
+      "Three fixed attendance colors, used identically in badges, dots, bars and legends.",
+      "Montserrat for all interface text with lining and tabular figures; Cormorant Garamond only for titles and the headline count.",
+      "Phosphor single-stroke icons (regular, filled when active); zero emoji.",
+      "Desktop sidebar, phone top bar plus thumb-reach tab bar, phone dialogs as bottom sheets."
+    ],
+    "rules": [
+      {
+        "name": "The Three States Rule",
+        "body": "Attendance is always and only sage (coming), amber (waiting), stone (not coming), in that order, everywhere: badge, dot, bar segment, legend, filter. No other hue may mean a status.",
+        "section": "colors"
+      },
+      {
+        "name": "The Corinto Is A Seal Rule",
+        "body": "Corinto marks brand and current selection (monogram tile, active nav icon, active tab). It is never a button fill, a link color or a status.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink-Tinted Rule",
+        "body": "Hover washes, overlays and shadows derive from ink (`rgba(29,36,54,α)`), never neutral black, so depth stays warm on paper.",
+        "section": "colors"
+      },
+      {
+        "name": "The Serif Names, Sans Operates Rule",
+        "body": "Cormorant Garamond appears only in titles, names and the headline count. Every control, number in a table, and label is Montserrat.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Count Rule",
+        "body": "Any number that is compared or totaled (counts, seats, pills, legends) uses tabular figures.",
+        "section": "typography"
+      },
+      {
+        "name": "The Hairline First Rule",
+        "body": "Every surface carries a 1px hairline; the shadow only softens it. A surface with shadow and no border is off-system.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** scope every admin style under `.adm-theme` and read values from its custom properties.",
+      "**Do** express attendance only through sage, amber and stone, in that order.",
+      "**Do** use Phosphor icons at 18–22px, regular weight, filled for the active nav or tab item.",
+      "**Do** give every surface a 1px hairline and, at most, the Rest shadow; reserve Overlay for dialogs and the login card.",
+      "**Do** turn tables into stacked cards and dialogs into bottom sheets at 720px and below; keep every task operable by touch.",
+      "**Do** keep tap targets at 40px or more and inputs at 16px on phones."
+    ],
+    "donts": [
+      "**Don't** use emoji anywhere in the panel; icons are Phosphor.",
+      "**Don't** fill buttons or links with corinto; it is the brand seal and selection marker only.",
+      "**Don't** color \"no asistirá\" red; declining is Stone, red is for destructive actions and errors.",
+      "**Don't** set controls, numbers or labels in Cormorant Garamond, or use the Display size anywhere but the Respuestas count.",
+      "**Don't** return to a dark navy slab background; the panel is light paper.",
+      "**Don't** restyle the public invitation from this file; it follows its own Tailwind world."
+    ]
+  }
+}

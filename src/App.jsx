@@ -1,87 +1,46 @@
-import { useState } from 'react';
-import Envelope from './components/Envelope';
-import Hero from './components/Hero';
-import VerseCard from './components/VerseCard';
-import Gallery from './components/Gallery';
-import DressCode from './components/DressCode';
-import Location from './components/Location';
-import GiftRegistry from './components/GiftRegistry';
-import Rsvp from './components/Rsvp';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import Invite from './Invite';
+import { isDemo } from './lib/supabaseClient'; // DEMO: quitar al conectar Supabase
+import { resetDemo } from './lib/demoClient'; // DEMO: quitar al conectar Supabase
+
+// El admin se carga aparte: los invitados no descargan el panel ni la
+// libreria de Excel.
+const AdminPanel = lazy(() => import('./admin/AdminPanel'));
 
 export default function App() {
-  const [opened, setOpened] = useState(false);
-
   return (
-    <div className="bg-paper min-h-screen">
-      {!opened && <Envelope onOpened={() => setOpened(true)} />}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Invite />} />
+        <Route
+          path="/novios"
+          element={
+            <Suspense fallback={null}>
+              <AdminPanel />
+            </Suspense>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
 
-      {/* Una sola columna, de arriba a abajo, en todos los tamanos.
-          El papel cubre el ancho completo; el contenido se centra. */}
-      <main className={`relative w-full text-ink ${opened ? '' : 'h-screen overflow-hidden'}`}>
-        {/* --- Modulo 1: banda floral arriba --- */}
-        <section className="relative">
-          <div
-            aria-hidden="true"
-            className="floral-band absolute inset-x-0 top-0 h-[320px] lg:h-[440px]"
-            style={{
-              maskImage: 'linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, #000 0%, #000 45%, transparent 100%)',
+      {/* DEMO: quitar este bloque al conectar Supabase */}
+      {isDemo && (
+        <div className="fixed bottom-[92px] left-3 z-[60] min-[861px]:bottom-3 min-[861px]:left-auto min-[861px]:right-3 flex items-center gap-2 rounded-full bg-[#2b3653]/90 py-1.5 pl-3.5 pr-1.5 text-[11px] font-medium tracking-[.08em] text-cream shadow-lg backdrop-blur">
+          MODO DEMO
+          <button
+            type="button"
+            onClick={() => {
+              resetDemo();
+              sessionStorage.clear();
+              window.location.reload();
             }}
-          />
-
-          <div className="relative mx-auto flex max-w-[620px] flex-col items-center px-6 lg:max-w-[860px] xl:max-w-[980px]">
-            <Hero />
-
-            <p className="mt-8 text-center font-serif leading-snug text-[#5a4a3f] text-[clamp(14px,3.4vw,19px)] lg:mt-12 lg:text-[24px] xl:text-[27px]">
-              Con la bendición de Dios y junto con
-              <br />
-              nuestras familias
-            </p>
-
-            <h1 className="mt-5 text-center font-serif font-light leading-[1.12] text-[#2b3653] text-[clamp(38px,9vw,60px)] lg:mt-8 lg:text-[92px] xl:text-[108px]">
-              Jonathan
-              <br />
-              <span className="font-script text-[.62em] text-maroon">&amp;</span>
-              <br />
-              Jasmin
-            </h1>
-
-            <p className="mt-6 text-center font-serif leading-snug text-[#5a4a3f] text-[clamp(14px,3.4vw,19px)] lg:mt-10 lg:text-[24px] xl:text-[27px]">
-              Nos complace invitarlos a la
-              <br />
-              celebración de nuestro matrimonio
-              <br />
-              que se celebra el día
-            </p>
-
-            <p className="mt-5 text-center font-serif font-light tracking-[.12em] text-[#2b3653] text-[clamp(28px,6.5vw,44px)] lg:mt-9 lg:text-[62px] xl:text-[72px]">
-              17 | 04 | 2027
-            </p>
-          </div>
-        </section>
-
-        <VerseCard />
-
-        {/* --- Modulo 2: galeria y tarjetas, banda floral al pie --- */}
-        <section className="relative mt-16 lg:mt-24">
-          <div
-            aria-hidden="true"
-            className="floral-band absolute inset-x-0 bottom-0 h-[360px] lg:h-[480px]"
-            style={{
-              maskImage: 'linear-gradient(to top, #000 0%, #000 40%, transparent 100%)',
-              WebkitMaskImage: 'linear-gradient(to top, #000 0%, #000 40%, transparent 100%)',
-            }}
-          />
-
-          <div className="relative mx-auto max-w-[620px] px-6 pb-16 lg:max-w-[860px] lg:pb-24 xl:max-w-[980px]">
-            <Gallery />
-            <DressCode />
-            <Location />
-            <GiftRegistry />
-            <Rsvp />
-          </div>
-        </section>
-      </main>
-    </div>
+            className="rounded-full bg-cream/15 px-2.5 py-1 transition-colors hover:bg-cream/30"
+          >
+            Reiniciar datos
+          </button>
+        </div>
+      )}
+    </BrowserRouter>
   );
 }

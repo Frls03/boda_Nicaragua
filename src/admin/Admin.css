@@ -1,0 +1,248 @@
+/* Estructura del panel: barra lateral clara en tablet/escritorio,
+   barra superior + pestañas inferiores en celular. */
+.adm-layout {
+  display: grid;
+  grid-template-columns: 264px minmax(0, 1fr);
+  min-height: 100dvh;
+}
+
+@media (min-width: 1600px) {
+  .adm-layout {
+    grid-template-columns: 288px minmax(0, 1fr);
+  }
+}
+
+/* ─── Marca ──────────────────────────────────────────────────────────────── */
+.adm-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.25rem 0.5rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.adm-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  aspect-ratio: 94 / 135;
+  border-radius: 24% / 17%;
+  background: var(--corinto);
+  box-shadow: 0 2px 6px -2px rgba(107, 22, 32, 0.45);
+  flex-shrink: 0;
+}
+
+.adm-brand-mark--sm {
+  width: 26px;
+}
+
+.adm-brand-svg {
+  width: 100%;
+  height: 100%;
+  fill: #f4efe4;
+}
+
+.adm-brand-names {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 1.25rem;
+  white-space: nowrap;
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.adm-brand-date {
+  margin: 0.1rem 0 0;
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+
+/* ─── Barra lateral ──────────────────────────────────────────────────────── */
+.adm-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.25rem 0.9rem 1rem;
+  background: var(--surface-2);
+  border-right: 1px solid var(--line);
+}
+
+.adm-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+}
+
+.adm-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  min-height: 40px;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-2);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-align: left;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.adm-nav-item:hover {
+  background: rgba(29, 36, 54, 0.05);
+  color: var(--ink);
+}
+
+.adm-nav-item.active {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: var(--shadow-1), inset 0 0 0 1px var(--line);
+}
+
+.adm-nav-item.active .ic {
+  color: var(--corinto);
+}
+
+.adm-logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 40px;
+  padding: 0.5rem 0.75rem;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.adm-logout-btn:hover {
+  background: rgba(29, 36, 54, 0.05);
+  color: var(--ink);
+}
+
+/* ─── Contenido ──────────────────────────────────────────────────────────── */
+.adm-main {
+  min-width: 0;
+  padding: 2.25rem clamp(1.25rem, 3.5vw, 3rem) 3rem;
+  max-width: 1440px;
+  width: 100%;
+  /* centrado en el espacio a la derecha de la barra lateral */
+  margin-inline: auto;
+}
+
+@media (min-width: 1600px) {
+  .adm-main {
+    padding-top: 2.75rem;
+  }
+}
+
+/* ─── Celular: barra superior y pestañas ─────────────────────────────────── */
+.adm-mobile-bar,
+.adm-tabbar {
+  display: none;
+}
+
+.adm-icon-btn {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--text-2);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.adm-icon-btn:hover {
+  background: rgba(29, 36, 54, 0.06);
+  color: var(--ink);
+}
+
+@media (max-width: 860px) {
+  .adm-layout {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+  }
+
+  .adm-sidebar {
+    display: none;
+  }
+
+  .adm-mobile-bar {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    height: 56px;
+    padding: 0 0.5rem 0 1rem;
+    background: rgba(246, 244, 239, 0.88);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .adm-mobile-title {
+    flex: 1;
+    font-family: var(--font-title);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  .adm-main {
+    padding: 1.25rem 1rem calc(88px + env(safe-area-inset-bottom));
+  }
+
+  .adm-tabbar {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    padding: 0.35rem 0.5rem calc(0.35rem + env(safe-area-inset-bottom));
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-top: 1px solid var(--line);
+  }
+
+  .adm-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-height: 52px;
+    justify-content: center;
+    border: 0;
+    border-radius: var(--r-md);
+    background: transparent;
+    color: var(--text-3);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: color var(--t-fast);
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .adm-tab.active {
+    color: var(--corinto);
+  }
+
+  .adm-tab:active {
+    transform: scale(0.96);
+  }
+}

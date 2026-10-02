@@ -22,3 +22,7 @@ npm-debug.log*
 Thumbs.db
 *.txt
 
+
+# impeccable: capturas de revision y estado temporal de la pagina de decision
+.impeccable/review/
+.impeccable/questions/

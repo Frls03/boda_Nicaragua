@@ -1,0 +1,856 @@
+/* Pestaña Invitados */
+.gt-root {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.25rem;
+}
+
+.gt-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.gt-header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.gt-hidden-input {
+  display: none;
+}
+
+/* ─── Botones ────────────────────────────────────────────────────────────── */
+.gt-btn-primary,
+.gt-btn-secondary,
+.gt-btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  height: 38px;
+  padding: 0 0.95rem;
+  border-radius: var(--r-sm);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast), transform var(--t-fast);
+}
+
+.gt-btn-primary {
+  border: 0;
+  background: var(--navy);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(29, 36, 54, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.gt-btn-primary:hover {
+  background: var(--navy-hover);
+}
+
+.gt-btn-secondary {
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--ink);
+  box-shadow: var(--shadow-1);
+}
+
+.gt-btn-secondary:hover {
+  border-color: #c3baa9;
+  background: var(--surface-2);
+}
+
+.gt-btn-ghost {
+  border: 0;
+  background: transparent;
+  color: var(--text-2);
+}
+
+.gt-btn-ghost:hover {
+  background: rgba(29, 36, 54, 0.05);
+  color: var(--ink);
+}
+
+.gt-btn-primary:active,
+.gt-btn-secondary:active,
+.gt-btn-ghost:active {
+  transform: translateY(1px);
+}
+
+/* ─── Filtros ────────────────────────────────────────────────────────────── */
+.gt-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.gt-search-wrap {
+  position: relative;
+  flex: 1 1 240px;
+  max-width: 360px;
+}
+
+.gt-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.75rem;
+  transform: translateY(-50%);
+  color: var(--text-3);
+}
+
+.gt-search {
+  width: 100%;
+  height: 38px;
+  padding: 0 0.75rem 0 2.25rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  font-size: 0.875rem;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.gt-search:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(43, 54, 83, 0.14);
+}
+
+.gt-filter-pills {
+  display: flex;
+  min-width: 0;
+  max-width: 100%;
+  gap: 0.375rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.gt-filter-pills::-webkit-scrollbar {
+  display: none;
+}
+
+.gt-filter-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  height: 34px;
+  padding: 0 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  color: var(--text-2);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background var(--t-fast), border-color var(--t-fast), color var(--t-fast);
+}
+
+.gt-filter-pill:hover {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.gt-filter-pill.active {
+  border-color: var(--navy);
+  background: var(--navy);
+  color: #fff;
+}
+
+.gt-pill-count {
+  min-width: 1.4em;
+  padding: 0 0.35rem;
+  border-radius: var(--r-full);
+  background: rgba(29, 36, 54, 0.07);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.gt-filter-pill.active .gt-pill-count {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+/* Punto de estado: el mismo en filtros, badges y respuestas */
+.gt-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.gt-dot-confirmed { background: var(--ok); }
+.gt-dot-pending   { background: var(--wait); }
+.gt-dot-declined  { background: var(--no); }
+
+.gt-filter-pill.active .gt-dot {
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.9);
+}
+
+/* ─── Excel ──────────────────────────────────────────────────────────────── */
+.gt-excel-preview {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid #cfe2d6;
+  border-radius: var(--r-lg);
+  background: var(--ok-soft);
+}
+
+.gt-excel-icon {
+  color: var(--ok);
+}
+
+.gt-excel-text {
+  flex: 1 1 220px;
+}
+
+.gt-excel-title {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ink);
+}
+
+.gt-excel-sub {
+  margin: 0.15rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--text-2);
+}
+
+.gt-excel-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* ─── Tabla ──────────────────────────────────────────────────────────────── */
+.gt-table-wrap {
+  overflow: hidden;
+}
+
+.gt-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.gt-table th {
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid var(--line);
+  background: var(--surface-2);
+  color: var(--text-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.gt-table td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid var(--line);
+  color: var(--text-2);
+  vertical-align: middle;
+}
+
+.gt-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.gt-table tbody tr {
+  transition: background var(--t-fast);
+}
+
+.gt-table tbody tr:hover {
+  background: #fcfbf8;
+}
+
+.gt-td-center {
+  text-align: center;
+}
+
+.gt-td-name {
+  min-width: 180px;
+}
+
+.gt-name {
+  display: block;
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.gt-note {
+  display: block;
+  margin-top: 0.1rem;
+  max-width: 32ch;
+  overflow: hidden;
+  color: var(--text-3);
+  font-size: 0.8125rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gt-td-date,
+.gt-td-table {
+  white-space: nowrap;
+}
+
+.gt-muted {
+  color: var(--text-3);
+}
+
+.gt-password-chip {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.8125rem;
+}
+
+.gt-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--r-full);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.gt-status-confirmed { background: var(--ok-soft);   color: var(--ok); }
+.gt-status-pending   { background: var(--wait-soft); color: var(--wait); }
+.gt-status-declined  { background: var(--no-soft);   color: var(--no); }
+
+.gt-status-count {
+  font-weight: 500;
+  opacity: 0.85;
+}
+
+/* ─── Acciones por fila ──────────────────────────────────────────────────── */
+.gt-td-actions {
+  width: 1%;
+}
+
+.gt-row-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.25rem;
+}
+
+.gt-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  height: 32px;
+  min-width: 32px;
+  padding: 0 0.5rem;
+  border: 0;
+  border-radius: var(--r-sm);
+  background: transparent;
+  color: var(--text-3);
+  font-size: 0.75rem;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.gt-action-btn:hover {
+  background: rgba(29, 36, 54, 0.06);
+  color: var(--ink);
+}
+
+.gt-action-btn.copy {
+  color: var(--navy);
+}
+
+.gt-action-btn.copy.done {
+  color: var(--ok);
+}
+
+.gt-action-btn.delete:hover {
+  background: var(--danger-soft);
+  color: var(--danger);
+}
+
+.gt-action-label {
+  display: inline;
+}
+
+.gt-meta-mobile {
+  display: none;
+}
+
+.gt-confirm-text {
+  margin-right: 0.25rem;
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.gt-action-btn.confirm-del {
+  background: var(--danger);
+  color: #fff;
+}
+
+.gt-action-btn.confirm-del:hover {
+  background: #8c1d27;
+  color: #fff;
+}
+
+.gt-action-btn.cancel-del {
+  color: var(--text-2);
+}
+
+/* ─── Vacío y carga ──────────────────────────────────────────────────────── */
+.gt-empty {
+  display: grid;
+  justify-items: center;
+  gap: 0.35rem;
+  padding: 3rem 1.5rem;
+  color: var(--text-3);
+  text-align: center;
+}
+
+.gt-empty-title {
+  margin: 0.5rem 0 0;
+  color: var(--ink);
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.gt-empty-sub {
+  margin: 0;
+  max-width: 40ch;
+  font-size: 0.8125rem;
+}
+
+.gt-skeleton {
+  border-radius: var(--r-sm);
+  background: linear-gradient(90deg, #ece7dd 0%, #f4f1ea 50%, #ece7dd 100%);
+  background-size: 200% 100%;
+  animation: gt-shimmer 1.4s ease-in-out infinite;
+}
+
+.gt-skeleton-title {
+  width: 180px;
+  height: 32px;
+}
+
+.gt-skeleton-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.25rem;
+}
+
+.gt-skeleton-row {
+  height: 18px;
+}
+
+.gt-skeleton-row:nth-child(even) {
+  width: 82%;
+}
+
+@keyframes gt-shimmer {
+  from { background-position: 100% 0; }
+  to   { background-position: -100% 0; }
+}
+
+.gt-form-error {
+  margin: 0;
+  padding: 0.6rem 0.8rem;
+  border-radius: var(--r-sm);
+  background: var(--danger-soft);
+  color: var(--danger);
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+/* ─── Formulario (dialogo) ───────────────────────────────────────────────── */
+.gt-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: rgba(29, 36, 54, 0.38);
+  animation: gt-fade 180ms var(--ease);
+}
+
+.gt-modal {
+  width: min(480px, 100%);
+  max-height: calc(100dvh - 2rem);
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--r-lg);
+  background: var(--surface);
+  box-shadow: var(--shadow-3);
+  animation: gt-rise 240ms var(--ease);
+}
+
+.gt-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem 0.9rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.gt-modal-header h3 {
+  margin: 0;
+  font-family: var(--font-title);
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.gt-modal-close {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: var(--r-full);
+  background: transparent;
+  color: var(--text-3);
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.gt-modal-close:hover {
+  background: rgba(29, 36, 54, 0.06);
+  color: var(--ink);
+}
+
+.gt-modal-body {
+  display: grid;
+  gap: 1rem;
+  padding: 1.25rem;
+  overflow-y: auto;
+}
+
+.gt-field {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.gt-field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1rem;
+}
+
+.gt-label {
+  color: var(--ink);
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.gt-optional {
+  margin-left: 0.25rem;
+  color: var(--text-3);
+  font-weight: 500;
+}
+
+.gt-help {
+  margin: 0;
+  color: var(--text-3);
+  font-size: 0.75rem;
+}
+
+.gt-input {
+  width: 100%;
+  height: 42px;
+  padding: 0 0.8rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-sm);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.9375rem;
+  transition: border-color var(--t-fast), box-shadow var(--t-fast);
+}
+
+.gt-input:hover {
+  border-color: #c3baa9;
+}
+
+.gt-input:focus {
+  outline: none;
+  border-color: var(--navy);
+  box-shadow: 0 0 0 3px rgba(43, 54, 83, 0.14);
+}
+
+.gt-input-mono {
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.875rem;
+}
+
+.gt-select {
+  appearance: none;
+  padding-right: 2.25rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 256 256'%3E%3Cpath fill='%23555c6e' d='M213.7 101.7l-80 80a8 8 0 0 1-11.4 0l-80-80a8 8 0 0 1 11.4-11.4L128 164.7l74.3-74.4a8 8 0 0 1 11.4 11.4Z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.8rem center;
+}
+
+.gt-textarea {
+  height: auto;
+  min-height: 84px;
+  padding: 0.6rem 0.8rem;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.gt-modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding: 0.9rem 1.25rem;
+  border-top: 1px solid var(--line);
+  background: var(--surface-2);
+  border-radius: 0 0 var(--r-lg) var(--r-lg);
+}
+
+@keyframes gt-fade {
+  from { opacity: 0; }
+}
+
+@keyframes gt-rise {
+  from { opacity: 0; transform: translateY(12px) scale(0.985); }
+}
+
+/* ─── Tablet: menos columnas ─────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .gt-table th:nth-child(6),
+  .gt-table td:nth-child(6) {
+    display: none;
+  }
+}
+
+/* ─── Celular: filas como tarjetas, dialogo como hoja inferior ───────────── */
+@media (max-width: 720px) {
+  .gt-header {
+    align-items: stretch;
+  }
+
+  .gt-header-actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    width: 100%;
+  }
+
+  .gt-header-actions .gt-btn-primary {
+    grid-column: 1 / -1;
+    order: -1;
+    height: 44px;
+  }
+
+  .gt-search-wrap {
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .gt-search {
+    height: 42px;
+    font-size: 1rem;
+  }
+
+  .gt-filter-pills {
+    margin: 0 -1rem;
+    padding: 0 2rem 0 1rem;
+    -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+    mask-image: linear-gradient(to right, #000 calc(100% - 40px), transparent);
+  }
+
+  .gt-table-wrap {
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+    overflow: visible;
+  }
+
+  .gt-table,
+  .gt-table tbody {
+    display: block;
+  }
+
+  .gt-table thead {
+    display: none;
+  }
+
+  .gt-table tbody {
+    display: grid;
+    gap: 0.6rem;
+  }
+
+  .gt-table tbody tr {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.35rem 0.75rem;
+    padding: 0.75rem 0.9rem 0.35rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--surface);
+    box-shadow: var(--shadow-1);
+  }
+
+  .gt-table tbody tr:hover {
+    background: var(--surface);
+  }
+
+  .gt-table td {
+    display: block;
+    padding: 0;
+    border: 0;
+  }
+
+  .gt-td-name {
+    grid-column: 1;
+    min-width: 0;
+  }
+
+  .gt-name {
+    font-size: 0.9375rem;
+  }
+
+  .gt-note {
+    max-width: none;
+  }
+
+  /* Estado arriba a la derecha */
+  .gt-table td[data-label='Estado'] {
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: end;
+  }
+
+  /* Contraseña, máximo y mesa viven en .gt-meta-mobile */
+  .gt-table td[data-label='Contraseña'],
+  .gt-table td[data-label='Máx.'],
+  .gt-table td[data-label='Mesa'] {
+    display: none !important;
+  }
+
+  /* El nombre, la nota y la linea de datos pasan a ser filas de la tarjeta:
+     asi la linea de datos usa todo el ancho y no comparte columna con el estado. */
+  .gt-table td.gt-td-name {
+    display: contents;
+  }
+
+  .gt-name {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: center;
+    min-width: 0;
+  }
+
+  .gt-note {
+    grid-column: 1 / -1;
+  }
+
+  .gt-meta-mobile {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 0.6rem;
+    min-width: 0;
+    color: var(--text-2);
+    font-size: 0.8125rem;
+    white-space: nowrap;
+  }
+
+  .gt-meta-mobile > * {
+    flex-shrink: 0;
+  }
+
+  .gt-meta-mobile > span:last-child {
+    flex-shrink: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .gt-meta-mobile > span + span::before {
+    content: '·';
+    margin-right: 0.6rem;
+    color: var(--text-3);
+  }
+
+  .gt-meta-mobile .gt-password-chip {
+    padding: 0.05rem 0.4rem;
+    font-size: 0.75rem;
+  }
+
+  .gt-td-date {
+    display: none !important;
+  }
+
+  .gt-td-actions {
+    grid-column: 1 / -1;
+    width: auto;
+    margin: 0 -0.4rem;
+  }
+
+  .gt-row-actions {
+    justify-content: stretch;
+  }
+
+  .gt-action-btn {
+    height: 36px;
+    min-width: 44px;
+  }
+
+  .gt-action-btn.copy {
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  .gt-action-label {
+    display: inline;
+  }
+
+  .gt-confirm-text {
+    flex: 1;
+  }
+
+  .gt-modal-backdrop {
+    place-items: end stretch;
+    padding: 0;
+  }
+
+  .gt-modal {
+    width: 100%;
+    max-height: 92dvh;
+    border-radius: 20px 20px 0 0;
+    animation: gt-sheet 280ms var(--ease);
+  }
+
+  .gt-modal-footer {
+    padding-bottom: calc(0.9rem + env(safe-area-inset-bottom));
+    border-radius: 0;
+  }
+
+  .gt-modal-footer > button {
+    flex: 1;
+    height: 46px;
+  }
+
+  .gt-input {
+    font-size: 1rem;
+  }
+
+  @keyframes gt-sheet {
+    from { transform: translateY(40px); opacity: 0; }
+  }
+}
