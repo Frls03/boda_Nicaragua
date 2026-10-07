@@ -1,4 +1,8 @@
 import { useState } from 'react';
+// Acuarela granate detras del sobre: public/acuarela.png recoloreada al granate
+// de la boda (scripts/generar-assets.py). La mancha ocupa ~60% de su imagen,
+// por eso se dibuja mas grande que el sobre para que asome por los cuatro lados.
+const ACUARELA = '/acuarela-sobre-granate.png';
 
 export default function Envelope({ onLeaving, onOpened }) {
   const [phase, setPhase] = useState('closed'); // closed -> opening -> leaving -> done
@@ -33,7 +37,7 @@ export default function Envelope({ onLeaving, onOpened }) {
   return (
     <div
       onTransitionEnd={handleScreenTransitionEnd}
-      className={`bg-paper fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 px-6 transition-opacity duration-700 ${
+      className={`bg-paper fixed inset-0 z-50 flex flex-col items-center justify-center gap-8 overflow-hidden px-6 transition-opacity duration-700 ${
         isLeaving ? 'pointer-events-none opacity-0' : 'opacity-100'
       }`}
     >
@@ -41,10 +45,18 @@ export default function Envelope({ onLeaving, onOpened }) {
         className="relative aspect-[4/3] w-[86vw] max-w-[360px] sm:max-w-[460px] lg:w-[52vw] lg:max-w-[820px]"
         style={{ perspective: '1400px' }}
       >
-        {/* Cuerpo del sobre en papel crema */}
-        <div className="absolute inset-0 overflow-hidden rounded-[3px] bg-[#f6f1e4] shadow-[0_18px_40px_-18px_rgba(0,0,0,.35)]">
-          <div className="absolute bottom-0 left-0 h-px w-[62%] origin-bottom-left -rotate-[36deg] bg-black/[.07]" />
-          <div className="absolute bottom-0 right-0 h-px w-[62%] origin-bottom-right rotate-[36deg] bg-black/[.07]" />
+        {/* Acuarela granate detras: separa el sobre crema del fondo crema */}
+        <img
+          src={ACUARELA}
+          alt=""
+          aria-hidden="true"
+          className={`pointer-events-none absolute left-1/2 top-1/2 aspect-square max-w-none -translate-x-1/2 -translate-y-1/2 select-none object-contain w-[205%] lg:w-[215%]`}
+        />
+
+        {/* Cuerpo del sobre en papel crema, con filete y sombra marcados */}
+        <div className="absolute inset-0 overflow-hidden rounded-[3px] bg-[#f6f1e4] shadow-[0_0_0_1px_rgba(122,29,42,.22),0_26px_50px_-18px_rgba(60,20,25,.6)]">
+          <div className="absolute bottom-0 left-0 h-px w-[62%] origin-bottom-left -rotate-[36deg] bg-[#5a3a2a]/[.18]" />
+          <div className="absolute bottom-0 right-0 h-px w-[62%] origin-bottom-right rotate-[36deg] bg-[#5a3a2a]/[.18]" />
         </div>
 
         {/* Solapa con el floreado en relieve tono sobre tono */}
@@ -57,7 +69,12 @@ export default function Envelope({ onLeaving, onOpened }) {
             clipPath: 'polygon(0 0, 100% 0, 50% 62%)',
             backgroundImage: "url('/floral-cream.png')",
           }}
-        />
+        >
+          {/* contorno de la solapa: gira con ella al abrir */}
+          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" className="absolute inset-0 h-full w-full">
+            <polyline points="0,0 50,62 100,0" fill="none" stroke="rgba(90,58,42,.32)" strokeWidth="2" vectorEffect="non-scaling-stroke" />
+          </svg>
+        </div>
 
         {/* Sello de lacre azul marino */}
         <button
@@ -76,7 +93,7 @@ export default function Envelope({ onLeaving, onOpened }) {
         </button>
       </div>
 
-      <p className="animate-pulse text-center uppercase tracking-[.22em] text-[#8a7a6a] text-[clamp(10px,2.6vw,13px)] lg:text-[15px]">
+      <p className="relative animate-pulse rounded-full bg-[#f6f1e4]/90 px-4 py-1.5 text-center font-medium uppercase tracking-[.22em] text-[#5c4a3e] shadow-[0_2px_10px_-4px_rgba(60,20,25,.35)] text-[clamp(10px,2.6vw,13px)] lg:px-5 lg:py-2 lg:text-[15px]">
         Toca el sello para abrir
       </p>
     </div>

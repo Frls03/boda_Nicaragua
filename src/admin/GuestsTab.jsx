@@ -13,6 +13,7 @@ import {
   fetchTables,
   formatDate,
   parseExcelRows,
+  passwordProblem,
   saveGuests,
   updateGuestInList,
 } from '../data/wedding'
@@ -119,6 +120,8 @@ function GuestsTab() {
   function handleSave() {
     if (!form.fullName.trim()) { setFormError('El nombre es obligatorio.'); return }
     if (!form.password.trim()) { setFormError('La contraseña es obligatoria.'); return }
+    const problema = passwordProblem(form.password.trim())
+    if (problema) { setFormError(problema); return }
 
     const passwordExists = guests.some(
       g => g.password === form.password.trim() &&
@@ -180,8 +183,13 @@ function GuestsTab() {
   function confirmExcelImport() {
     if (!excelPreview) return
     const existingPasswords = new Set(guests.map(g => g.password))
-    const toAdd = excelPreview.filter(g => !existingPasswords.has(g.password))
+    const validas = excelPreview.filter(g => !passwordProblem(g.password))
+    const toAdd = validas.filter(g => !existingPasswords.has(g.password))
     persist([...toAdd, ...guests])
+    const omitidas = excelPreview.length - toAdd.length
+    if (omitidas > 0) {
+      setFormError(`Se importaron ${toAdd.length}. Se omitieron ${omitidas} por contraseña repetida o inválida (6 a 64 caracteres).`)
+    }
     setExcelPreview(null)
   }
 

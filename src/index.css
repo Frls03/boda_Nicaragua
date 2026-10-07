@@ -83,7 +83,8 @@ body {
 
 /* Linea caligrafica del RSVP: margen interno para que los trazos que salen
    de la caja queden dentro de ella aun durante la animacion. */
-.rsvp-script {
+.rsvp-script,
+.script-safe {
   padding: 0.22em 0.14em;
   margin-left: -0.14em;
   margin-right: -0.14em;

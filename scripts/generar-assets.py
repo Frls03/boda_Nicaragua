@@ -233,6 +233,22 @@ def main() -> None:
     lienzo.save(PUB / "verso-completo.png")
     print(f"  verso-completo.png  {lienzo.size}")
 
+    # --- acuarela del sobre: acuarela.png (cliente) trae fondo blanco opaco ---
+    # El pigmento se separa del blanco del papel (alfa = cuanto oscurece) y se
+    # recolorea al granate de la boda.
+    origen = PUB / "acuarela.png"
+    if origen.exists():
+        a = np.asarray(Image.open(origen).convert("RGB")).astype(float) / 255
+        # recoloreada al granate de la boda: misma forma y textura, otro pigmento
+        lum = (a * [0.299, 0.587, 0.114]).sum(axis=2)
+        alfa_g = np.clip((1 - lum) * 3.6, 0, 1)
+        alfa_g[alfa_g < 0.03] = 0
+        granate = np.zeros((*lum.shape, 4))
+        granate[..., :3] = (122, 29, 42)
+        granate[..., 3] = alfa_g * 255
+        Image.fromarray(granate.astype("uint8"), "RGBA").save(PUB / "acuarela-sobre-granate.png", optimize=True)
+        print("  acuarela-sobre-granate.png")
+
     # --- fotos: versiones web de los originales del cliente (2400x3600, 0.5-2 MB) ---
     # ancho = 2x el maximo en pantalla (hero 600px, celda del collage ~460px)
     destino = PUB / "fotos"

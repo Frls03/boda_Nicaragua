@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { formatDate, submitRsvp } from '../data/wedding';
 
 const pill =
-  'w-full rounded-full border border-[#8a7a6a]/40 bg-white/55 px-5 py-2.5 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-ink backdrop-blur-[2px] transition-colors duration-300';
+  'w-full rounded-full border border-[#8a7a6a]/40 bg-white/55 px-5 py-2.5 text-center text-[clamp(14px,3.6vw,16px)] lg:text-[19px] text-ink backdrop-blur-[2px] transition-colors duration-300';
 
 const stepBtn =
   'grid h-10 w-10 place-items-center rounded-full border border-[#8a7a6a]/40 bg-white/55 font-serif text-[22px] leading-none text-ink transition-colors duration-300 enabled:hover:border-maroon enabled:hover:text-maroon disabled:opacity-35 lg:h-14 lg:w-14 lg:text-[30px]';
@@ -20,7 +20,6 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
   const [guests, setGuests] = useState(
     Math.min(maxGuests, guest.attendanceCount > 0 ? guest.attendanceCount : maxGuests)
   );
-  const [notes, setNotes] = useState(guest.notes ?? '');
   const [editing, setEditing] = useState(guest.attendance === 'pending');
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
@@ -44,7 +43,6 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
       const updated = await submitRsvp(guest, {
         attendance: choice === 'yes' ? 'confirmed' : 'declined',
         attendanceCount: choice === 'yes' ? Math.min(Math.max(guests, 1), maxGuests) : 0,
-        notes: notes.trim(),
       });
       onGuestUpdate(updated);
       setEditing(false);
@@ -64,12 +62,12 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
         Confirma tu asistencia
       </h2>
 
-      <p className="mx-auto mt-3 max-w-[330px] text-center leading-snug text-[#5a4a3f] text-[clamp(13px,3.2vw,15px)] lg:mt-4 lg:max-w-[520px] lg:text-[19px]">
+      <p className="mx-auto mt-3 max-w-[330px] text-center leading-snug text-[#3d3128] text-[clamp(14px,3.6vw,16px)] lg:mt-4 lg:max-w-[520px] lg:text-[19px]">
         Agradecemos confirmar su asistencia a más tardar el{' '}
         <span className="whitespace-nowrap font-semibold text-[#2b3653]">01 de marzo del 2027</span>
       </p>
 
-      <p className="mt-5 text-center text-[clamp(13px,3.2vw,15px)] text-[#5a4a3f] lg:mt-7 lg:text-[19px]">
+      <p className="mt-5 text-center text-[clamp(14px,3.6vw,16px)] text-[#3d3128] lg:mt-7 lg:text-[19px]">
         Invitación para
         <span className="mt-0.5 block font-serif font-semibold text-[#2b3653] text-[clamp(20px,5vw,26px)] lg:text-[34px]">
           {guest.fullName}
@@ -87,8 +85,8 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
           titulo caligrafico grande y el aire alrededor. */}
       <aside aria-label="Celebración solo para adultos" className="mx-auto mb-10 mt-9 max-w-[360px] text-center lg:mb-14 lg:mt-12 lg:max-w-[560px]">
         <h3 className="font-script leading-[1.1] text-maroon text-[clamp(38px,9.5vw,50px)] lg:text-[68px]">Solo adultos</h3>
-        <p className="mx-auto mt-2 max-w-[30ch] font-serif leading-snug text-ink text-[clamp(15px,3.7vw,17px)] lg:mt-3 lg:text-[22px]">
-          Con todo cariño, les informamos que nuestra celebración no incluye niños. Agradecemos su comprensión.
+        <p className="mx-auto mt-2 max-w-[30ch] font-serif font-medium leading-snug text-ink text-[clamp(16px,4vw,18px)] lg:mt-3 lg:text-[22px]">
+          Amamos a los pequeños de la familia, pero en esta ocasión hemos preparado una celebración solo para adultos.
         </p>
       </aside>
 
@@ -163,12 +161,12 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
         </button>
 
         {maxGuests === 1 ? (
-          <p className={`mt-2 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f] transition-opacity duration-300 ${choice === 'yes' ? '' : 'opacity-45'}`}>
+          <p className={`mt-2 text-center text-[clamp(14px,3.6vw,16px)] lg:text-[19px] text-[#3d3128] transition-opacity duration-300 ${choice === 'yes' ? '' : 'opacity-45'}`}>
             Tu invitación es para 1 adulto.
           </p>
         ) : (
         <>
-        <p id="rsvp-guests" className="mt-2 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f]">
+        <p id="rsvp-guests" className="mt-2 text-center text-[clamp(14px,3.6vw,16px)] lg:text-[19px] text-[#3d3128]">
           ¿Cuántos adultos asistirán?
         </p>
 
@@ -205,24 +203,15 @@ export default function Rsvp({ guest, onChangeGuest, onGuestUpdate }) {
             </button>
           </div>
 
-          <p className="mt-1.5 text-[clamp(12px,3vw,14px)] lg:mt-2 lg:text-[17px] text-[#5a4a3f]">
+          <p className="mt-1.5 text-[clamp(12px,3vw,14px)] lg:mt-2 lg:text-[17px] text-[#3d3128]">
             {guests === 1 ? 'adulto' : 'adultos'} · máximo {maxGuests}
           </p>
         </div>
         </>
         )}
 
-        <p className="mt-2 text-center text-[clamp(13px,3.2vw,15px)] lg:text-[19px] text-[#5a4a3f]">Notas adicionales (opcional)</p>
-
-        <textarea
-          value={notes}
-          onChange={(e) => setNotes(e.target.value)}
-          placeholder="Alergias, preferencias alimenticias, etc."
-          className={`${pill} min-h-[46px] lg:min-h-[70px] resize-none placeholder:text-[#8a7a6a]`}
-        />
-
         {error && (
-          <p role="alert" className="mt-2 text-center text-[clamp(13px,3.2vw,15px)] text-maroon lg:text-[17px]">
+          <p role="alert" className="mt-2 text-center text-[clamp(14px,3.6vw,16px)] text-maroon lg:text-[17px]">
             {error}
           </p>
         )}

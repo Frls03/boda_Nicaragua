@@ -1,6 +1,6 @@
 // Capa de datos del admin y del RSVP, replicada de webapp_bodanica
 // (src/data/wedding.js). Se quito lo propio de esa boda (textos de playa,
-// hospedaje, galeria de subida). El esquema esta en supabase/schema.sql.
+// hospedaje, galeria de subida). El esquema esta en supabase/migrations/.
 import { requireSupabase } from '../lib/supabaseClient';
 
 // ─── Datos de la boda ─────────────────────────────────────────────────────────
@@ -176,13 +176,13 @@ export async function loginGuest(password) {
   return data?.[0] ? fromDbGuest(data[0]) : null;
 }
 
-export async function submitRsvp(guest, { attendance, attendanceCount, notes }) {
+// Las notas son del admin: el invitado no las envia ni las recibe.
+export async function submitRsvp(guest, { attendance, attendanceCount }) {
   const { data, error } = await requireSupabase().rpc('submit_rsvp', {
     p_guest_id: guest.id,
     p_password: guest.password,
     p_attendance: attendance,
     p_attendance_count: attendanceCount,
-    p_notes: notes,
   });
   if (error) throw error;
   if (!data?.[0]) throw new Error('No se pudo actualizar la confirmación.');
@@ -269,6 +269,21 @@ export function buildInvitationMessage(guest) {
 
 // ─── Excel: importar / exportar ───────────────────────────────────────────────
 export const EXCEL_TEMPLATE_HEADERS = ['Nombre Completo', 'Contraseña', 'Máx. Invitados', 'Notas'];
+
+// Mismas reglas que la base (supabase/migrations): 6 a 64 caracteres, sin
+// espacios al borde. Devuelve el mensaje del problema, o '' si es valida.
+export function passwordProblem(password) {
+  const p = String(password ?? '');
+  if (p !== p.trim()) return 'La contraseña no puede empezar ni terminar con espacios.';
+  if (p.length < 6) return 'La contraseña debe tener al menos 6 caracteres.';
+  if (p.length > 64) return 'La contraseña puede tener como máximo 64 caracteres.';
+  return '';
+}
+
+// El servidor limita los intentos de contraseña por conexion (codigo P0429)
+export function isRateLimited(error) {
+  return error?.code === 'P0429' || /Demasiados intentos/.test(error?.message ?? '');
+}
 
 export function parseExcelRows(rows) {
   return rows

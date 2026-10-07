@@ -24,14 +24,14 @@ Cada invitación es personal: una contraseña por invitado que fija su nombre y 
 
 ## Operating Context
 
-- Flujo del invitado: contraseña -> sobre -> invitación -> confirmación (sí/no, cantidad de adultos hasta su máximo, notas).
+- Flujo del invitado: contraseña -> sobre -> invitación -> confirmación (sí/no y cantidad de adultos hasta su máximo; sin notas).
 - Flujo de los novios en `/novios`: login con correo y contraseña (Supabase Auth, lista de admins permitidos); pestañas Invitados (alta/edición/baja, plantilla e importación de Excel, copiar mensaje con link y contraseña), Ver invitaciones (totales y progreso por estado), Mesas (crear mesas con capacidad, asignar sillas).
 - Fecha límite de confirmación: 01 de marzo del 2027.
 - La celebración es solo para adultos.
 
 ## Capabilities and Constraints
 
-- React 18 + Vite + Tailwind; admin con CSS propio bajo `.adm-theme`. Backend Supabase (`supabase/schema.sql`). Modo demo local mientras no haya `.env`.
+- React 18 + Vite + Tailwind; admin con CSS propio bajo `.adm-theme`. Backend Supabase (`supabase/migrations/`, guia en `supabase/README.md`). Modo demo local mientras no haya `.env`.
 - Admin replicado de `github.com/Frls03/webapp_bodanica`: la funcionalidad del admin no se cambia sin pedido explícito.
 - Estados de asistencia: pendiente, confirmado, no asistirá.
 

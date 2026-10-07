@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { clearGuestSession, loginGuest, saveGuestSession } from '../data/wedding';
+import { clearGuestSession, isRateLimited, loginGuest, saveGuestSession } from '../data/wedding';
 
 // Contrasena del invitado antes del sobre. Logica del PasswordGate de
 // webapp_bodanica (modo "invite"), con el estilo de esta invitacion.
@@ -28,7 +28,9 @@ export default function GuestGate({ onAuthenticated }) {
       setError(
         err.message?.includes('VITE_SUPABASE')
           ? 'La invitación todavía no está conectada. Intenta más tarde.'
-          : 'No se pudo verificar la contraseña. Intenta de nuevo.'
+          : isRateLimited(err)
+            ? 'Hubo demasiados intentos desde esta conexión. Espera unos minutos y vuelve a intentar.'
+            : 'No se pudo verificar la contraseña. Intenta de nuevo.'
       );
       if (err.message?.includes('VITE_SUPABASE')) console.warn(err.message);
     } finally {
@@ -58,12 +60,12 @@ export default function GuestGate({ onAuthenticated }) {
         <h1 className="mt-6 font-serif font-light leading-[1.1] text-[#2b3653] text-[clamp(36px,9vw,48px)] lg:text-[60px]">
           Jonathan <span className="font-script text-[.7em] text-maroon">&amp;</span> Jasmin
         </h1>
-        <p className="mt-3 font-serif tracking-[.12em] text-[#5a4a3f] text-[clamp(16px,4vw,20px)] lg:text-[24px]">
+        <p className="mt-3 font-serif tracking-[.12em] text-[#3d3128] text-[clamp(16px,4vw,20px)] lg:text-[24px]">
           17 | 04 | 2027
         </p>
 
         <form onSubmit={handleSubmit} className="mt-9 flex flex-col gap-3 lg:mt-12">
-          <label htmlFor="guest-pwd" className="text-[clamp(13px,3.2vw,15px)] text-[#5a4a3f] lg:text-[18px]">
+          <label htmlFor="guest-pwd" className="text-[clamp(14px,3.6vw,16px)] text-[#3d3128] lg:text-[18px]">
             Escribe la contraseña de tu invitación
           </label>
 
@@ -85,14 +87,14 @@ export default function GuestGate({ onAuthenticated }) {
               type="button"
               onClick={() => setShowPwd((v) => !v)}
               aria-label={showPwd ? 'Ocultar contraseña' : 'Ver contraseña'}
-              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full px-3 py-1.5 text-[11px] font-medium uppercase tracking-[.12em] text-[#5a4a3f] transition-colors hover:text-maroon lg:text-[13px]"
+              className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full px-3 py-1.5 text-[11px] font-medium uppercase tracking-[.12em] text-[#3d3128] transition-colors hover:text-maroon lg:text-[13px]"
             >
               {showPwd ? 'Ocultar' : 'Ver'}
             </button>
           </div>
 
           {error && (
-            <p id="guest-pwd-error" role="alert" className="text-[clamp(13px,3.2vw,15px)] text-maroon lg:text-[17px]">
+            <p id="guest-pwd-error" role="alert" className="text-[clamp(14px,3.6vw,16px)] text-maroon lg:text-[17px]">
               {error}
             </p>
           )}
@@ -106,7 +108,7 @@ export default function GuestGate({ onAuthenticated }) {
           </button>
         </form>
 
-        <p className="mt-8 text-[clamp(12px,3vw,14px)] text-[#8a7a6a] lg:text-[16px]">
+        <p className="mt-8 text-[clamp(12px,3vw,14px)] text-[#6b5b4e] lg:text-[16px]">
           Si no tienes tu contraseña, revisa el mensaje que te enviamos.
         </p>
       </div>

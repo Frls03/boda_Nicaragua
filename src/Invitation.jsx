@@ -53,21 +53,21 @@ export default function Invitation({ guest, skipEnvelope, onChangeGuest, onGuest
 
             {/* Nombres y fecha: se escriben con tinta al entrar en pantalla (useInkOnView) */}
             <div ref={inkRef} className="flex flex-col items-center">
-            <p className="inv-ink inv-ink-1 mt-8 text-center font-serif leading-snug text-[#5a4a3f] text-[clamp(14px,3.4vw,19px)] lg:mt-12 lg:text-[24px] xl:text-[27px]">
+            <p className="inv-ink inv-ink-1 mt-8 text-center font-serif font-medium leading-snug text-[#3d3128] text-[clamp(16px,4vw,21px)] lg:mt-12 lg:text-[27px] xl:text-[30px]">
               Con la bendición de Dios y junto con
               <br />
               nuestras familias
             </p>
 
-            <h1 className="inv-names mt-5 text-center font-serif font-light leading-[1.12] text-[#2b3653] text-[clamp(38px,9vw,60px)] lg:mt-8 lg:text-[92px] xl:text-[108px]">
-              Jonathan
-              <br />
-              <span className="font-script text-[.62em] text-maroon">&amp;</span>
+            {/* Caligrafia con "colochos" (Great Vibes). "Jonathan &" mide 4.23em:
+                el tamaño cabe en 312px de celular. script-safe da aire a los trazos. */}
+            <h1 className="inv-names script-safe mt-3 text-center font-script leading-[1.08] text-[#24304d] text-[clamp(52px,15.5vw,76px)] lg:mt-5 lg:text-[116px] xl:text-[132px]">
+              Jonathan <span className="text-maroon">&amp;</span>
               <br />
               Jasmin
             </h1>
 
-            <p className="inv-ink inv-ink-2 mt-6 text-center font-serif leading-snug text-[#5a4a3f] text-[clamp(14px,3.4vw,19px)] lg:mt-10 lg:text-[24px] xl:text-[27px]">
+            <p className="inv-ink inv-ink-2 mt-6 text-center font-serif font-medium leading-snug text-[#3d3128] text-[clamp(16px,4vw,21px)] lg:mt-10 lg:text-[27px] xl:text-[30px]">
               Nos complace invitarlos a la
               <br />
               celebración de nuestro matrimonio
@@ -75,7 +75,7 @@ export default function Invitation({ guest, skipEnvelope, onChangeGuest, onGuest
               que se celebra el día
             </p>
 
-            <p className="inv-date mt-5 text-center font-serif font-light tracking-[.12em] text-[#2b3653] text-[clamp(28px,6.5vw,44px)] lg:mt-9 lg:text-[62px] xl:text-[72px]">
+            <p className="inv-date mt-5 text-center font-serif font-medium tracking-[.12em] text-[#24304d] text-[clamp(30px,7vw,46px)] lg:mt-9 lg:text-[64px] xl:text-[74px]">
               17 | 04 | 2027
             </p>
             </div>

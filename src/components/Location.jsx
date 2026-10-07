@@ -10,7 +10,7 @@ export default function Location() {
         Ubicación
       </h2>
 
-      <p className="mx-auto mt-2 max-w-[310px] leading-snug text-[clamp(13px,3.2vw,15px)] lg:max-w-[460px] lg:text-[20px]">
+      <p className="mx-auto mt-2 max-w-[310px] font-medium leading-snug text-[clamp(14px,3.6vw,16px)] lg:max-w-[460px] lg:text-[20px]">
         <span className="font-semibold">Jardín Green Box</span>
         <br />
         Acceso a Cerro Alux, Km. 27,

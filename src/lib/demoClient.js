@@ -99,11 +99,16 @@ function from(table) {
   };
 }
 
-// Mismas reglas que las funciones de supabase/schema.sql
+// Como en la base real: al invitado nunca se le devuelven notas, telefono ni mesa
+const publico = ({ id, password, full_name, names, attendance, attendance_count, max_attendees, created_at, updated_at }) =>
+  ({ id, password, full_name, names, attendance, attendance_count, max_attendees, created_at, updated_at });
+
+// Mismas reglas que las funciones de supabase/migrations
 function rpc(name, args) {
   if (name === 'login_guest') {
     const pwd = String(args.p_password ?? '').trim();
-    return ok(pwd ? db.guests.filter((g) => g.password === pwd).slice(0, 1) : []);
+    const g = pwd ? db.guests.find((r) => r.password === pwd) : null;
+    return ok(g ? [publico(g)] : []);
   }
 
   if (name === 'submit_rsvp') {
@@ -117,10 +122,9 @@ function rpc(name, args) {
       args.p_attendance === 'confirmed'
         ? Math.min(Math.max(Number(args.p_attendance_count) || 1, 1), g.max_attendees)
         : 0;
-    g.notes = String(args.p_notes ?? '').slice(0, 1000);
     g.updated_at = now();
     save();
-    return ok([{ ...g }]);
+    return ok([publico(g)]);
   }
 
   return fail(`Modo demo: rpc desconocida ${name}`);

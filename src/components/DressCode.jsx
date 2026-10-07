@@ -12,13 +12,13 @@ export default function DressCode() {
     <section className="mt-10 rounded-t-[26px] bg-white/85 px-6 pb-7 pt-7 lg:mt-16 lg:rounded-t-[34px] lg:px-12 lg:pb-11 lg:pt-12 text-center text-ink shadow-[0_8px_26px_-14px_rgba(60,40,30,.5)] backdrop-blur-[2px]">
       <h2 className="font-script leading-none text-maroon text-[clamp(28px,7vw,36px)] lg:text-[50px]">Dress Code</h2>
 
-      <p className="mx-auto mt-3 max-w-[300px] leading-snug text-[clamp(13px,3.2vw,15px)] lg:max-w-[440px] lg:text-[20px]">
+      <p className="mx-auto mt-3 max-w-[300px] font-medium leading-snug text-[clamp(14px,3.6vw,16px)] lg:max-w-[440px] lg:text-[20px]">
         Hombres corbata y traje sastre,
         <br />
         mujeres vestido largo elegante.
       </p>
 
-      <p className="mt-5 font-serif font-semibold uppercase tracking-[.18em] text-[#5a4a3f] text-[clamp(11px,2.8vw,13px)] lg:mt-8 lg:text-[16px]">
+      <p className="mt-5 font-serif font-semibold uppercase tracking-[.18em] text-[#3d3128] text-[clamp(11px,2.8vw,13px)] lg:mt-8 lg:text-[16px]">
         Colores a evitar
       </p>
 
@@ -30,7 +30,7 @@ export default function DressCode() {
               className="h-7 w-7 rounded-full lg:h-10 lg:w-10 shadow-[inset_0_0_0_1px_rgba(0,0,0,.18)]"
               style={{ background: c.hex }}
             />
-            <span className="text-[clamp(11px,2.8vw,13px)] lg:text-[16px] text-[#5a4a3f]">{c.name}</span>
+            <span className="text-[clamp(11px,2.8vw,13px)] lg:text-[16px] text-[#3d3128]">{c.name}</span>
           </li>
         ))}
       </ul>

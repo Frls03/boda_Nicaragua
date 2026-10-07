@@ -15,7 +15,7 @@ export default function VerseCard() {
         <div className="absolute inset-x-[10%] top-[11%] text-center">
           {/* Linea mas larga = 6.33em y la caja es el 80% de la tarjeta: estos
               tamanos caben a lo ancho y terminan ~64% del alto, antes de las flores. */}
-          <blockquote className="font-script leading-[1.75] text-[#2b3653] text-[clamp(20px,5.2vw,29px)] lg:text-[44px] xl:text-[50px]">
+          <blockquote className="font-script leading-[1.75] text-[#24304d] text-[clamp(20px,5.2vw,29px)] lg:text-[44px] xl:text-[50px]">
             Ponme como un sello
             <br />
             sobre tu corazón,
