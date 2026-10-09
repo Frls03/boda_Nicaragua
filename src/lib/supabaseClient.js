@@ -1,13 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
-import { demoClient } from './demoClient'; // DEMO: quitar al conectar Supabase
+import { demoClient } from './demoClient'; // DEMO: quitar al pasar a produccion
 
 const url = import.meta.env.VITE_SUPABASE_URL;
 const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-const real = url && anonKey ? createClient(url, anonKey) : null;
+// DEMO: VITE_USE_DEMO=true fuerza el cliente de prueba (datos en este
+// navegador) aunque las claves de Supabase esten cargadas. Sin claves tambien
+// cae al demo. Para produccion: VITE_USE_DEMO=false (o quitar la linea).
+const forzarDemo = import.meta.env.VITE_USE_DEMO === 'true';
+const real = !forzarDemo && url && anonKey ? createClient(url, anonKey) : null;
 
-// DEMO: sin .env se usa el cliente de prueba (datos en este navegador).
-// Con las variables configuradas, esto ya usa Supabase real automaticamente.
 export const isDemo = !real;
 export const supabase = real ?? demoClient;
 

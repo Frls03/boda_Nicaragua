@@ -235,19 +235,21 @@ def main() -> None:
 
     # --- acuarela del sobre: acuarela.png (cliente) trae fondo blanco opaco ---
     # El pigmento se separa del blanco del papel (alfa = cuanto oscurece) y se
-    # recolorea al granate de la boda.
+    # recolorea. Azul = la que se usa (fondo del sobre con sello granate);
+    # granate = version anterior, por si vuelven atras.
     origen = PUB / "acuarela.png"
     if origen.exists():
         a = np.asarray(Image.open(origen).convert("RGB")).astype(float) / 255
-        # recoloreada al granate de la boda: misma forma y textura, otro pigmento
         lum = (a * [0.299, 0.587, 0.114]).sum(axis=2)
-        alfa_g = np.clip((1 - lum) * 3.6, 0, 1)
-        alfa_g[alfa_g < 0.03] = 0
-        granate = np.zeros((*lum.shape, 4))
-        granate[..., :3] = (122, 29, 42)
-        granate[..., 3] = alfa_g * 255
-        Image.fromarray(granate.astype("uint8"), "RGBA").save(PUB / "acuarela-sobre-granate.png", optimize=True)
-        print("  acuarela-sobre-granate.png")
+        alfa_p = np.clip((1 - lum) * 3.6, 0, 1)
+        alfa_p[alfa_p < 0.03] = 0
+        for nombre, pigmento in [("acuarela-sobre-azul.png", (58, 78, 124)),
+                                 ("acuarela-sobre-granate.png", (122, 29, 42))]:
+            capa = np.zeros((*lum.shape, 4))
+            capa[..., :3] = pigmento
+            capa[..., 3] = alfa_p * 255
+            Image.fromarray(capa.astype("uint8"), "RGBA").save(PUB / nombre, optimize=True)
+        print("  acuarela-sobre-azul.png / acuarela-sobre-granate.png")
 
     # --- fotos: versiones web de los originales del cliente (2400x3600, 0.5-2 MB) ---
     # ancho = 2x el maximo en pantalla (hero 600px, celda del collage ~460px)

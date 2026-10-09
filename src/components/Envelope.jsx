@@ -1,8 +1,9 @@
 import { useState } from 'react';
-// Acuarela granate detras del sobre: public/acuarela.png recoloreada al granate
-// de la boda (scripts/generar-assets.py). La mancha ocupa ~60% de su imagen,
-// por eso se dibuja mas grande que el sobre para que asome por los cuatro lados.
-const ACUARELA = '/acuarela-sobre-granate.png';
+// Acuarela azul detras del sobre y sello granate (colores invertidos a pedido
+// de los novios). Sale de public/acuarela.png (scripts/generar-assets.py); la
+// version granate anterior sigue en '/acuarela-sobre-granate.png'. La mancha
+// ocupa ~60% de su imagen: se dibuja mas grande que el sobre para que asome.
+const ACUARELA = '/acuarela-sobre-azul.png';
 
 export default function Envelope({ onLeaving, onOpened }) {
   const [phase, setPhase] = useState('closed'); // closed -> opening -> leaving -> done
@@ -54,7 +55,7 @@ export default function Envelope({ onLeaving, onOpened }) {
         />
 
         {/* Cuerpo del sobre en papel crema, con filete y sombra marcados */}
-        <div className="absolute inset-0 overflow-hidden rounded-[3px] bg-[#f6f1e4] shadow-[0_0_0_1px_rgba(122,29,42,.22),0_26px_50px_-18px_rgba(60,20,25,.6)]">
+        <div className="absolute inset-0 overflow-hidden rounded-[3px] bg-[#f6f1e4] shadow-[0_0_0_1px_rgba(43,54,83,.22),0_26px_50px_-18px_rgba(20,28,50,.55)]">
           <div className="absolute bottom-0 left-0 h-px w-[62%] origin-bottom-left -rotate-[36deg] bg-[#5a3a2a]/[.18]" />
           <div className="absolute bottom-0 right-0 h-px w-[62%] origin-bottom-right rotate-[36deg] bg-[#5a3a2a]/[.18]" />
         </div>
@@ -76,7 +77,7 @@ export default function Envelope({ onLeaving, onOpened }) {
           </svg>
         </div>
 
-        {/* Sello de lacre azul marino */}
+        {/* Sello de lacre granate */}
         <button
           onClick={handleSealClick}
           aria-label="Abrir invitación"
@@ -85,7 +86,7 @@ export default function Envelope({ onLeaving, onOpened }) {
           }`}
         >
           <img
-            src="/sello-navy.png"
+            src="/sello-verso.png"
             alt=""
             aria-hidden="true"
             className="h-full w-full object-contain drop-shadow-[0_6px_10px_rgba(0,0,0,.35)]"
@@ -93,7 +94,7 @@ export default function Envelope({ onLeaving, onOpened }) {
         </button>
       </div>
 
-      <p className="relative animate-pulse rounded-full bg-[#f6f1e4]/90 px-4 py-1.5 text-center font-medium uppercase tracking-[.22em] text-[#5c4a3e] shadow-[0_2px_10px_-4px_rgba(60,20,25,.35)] text-[clamp(10px,2.6vw,13px)] lg:px-5 lg:py-2 lg:text-[15px]">
+      <p className="relative animate-pulse rounded-full bg-[#f6f1e4]/90 px-4 py-1.5 text-center font-medium uppercase tracking-[.22em] text-[#5c4a3e] shadow-[0_2px_10px_-4px_rgba(20,28,50,.35)] text-[clamp(10px,2.6vw,13px)] lg:px-5 lg:py-2 lg:text-[15px]">
         Toca el sello para abrir
       </p>
     </div>
