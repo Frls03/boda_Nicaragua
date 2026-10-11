@@ -31,7 +31,7 @@ Cada invitación es personal: una contraseña por invitado que fija su nombre y 
 
 ## Capabilities and Constraints
 
-- React 18 + Vite + Tailwind; admin con CSS propio bajo `.adm-theme`. Backend Supabase (`supabase/migrations/`, guia en `supabase/README.md`). Modo demo local mientras no haya `.env`.
+- React 18 + Vite + Tailwind; admin con CSS propio bajo `.adm-theme`. Backend Supabase (`supabase/migrations/`, guia en `supabase/README.md`). En producción desde el 10/10/2026 (proyecto Supabase `hrsivkanmcnquhiulhen`).
 - Admin replicado de `github.com/Frls03/webapp_bodanica`: la funcionalidad del admin no se cambia sin pedido explícito.
 - Estados de asistencia: pendiente, confirmado, no asistirá.
 
@@ -44,7 +44,7 @@ Cada invitación es personal: una contraseña por invitado que fija su nombre y 
 ## Evidence on Hand
 
 - Fotos reales de la pareja en `public/fotos/` (portada y collage), sellos de lacre (`sello-navy.png`, `sello-verso.png`), florales y papel en `public/`.
-- No hay testimonios, métricas ni datos reales de invitados todavía: el modo demo usa invitados ficticios.
+- No hay testimonios ni métricas. Los invitados reales los cargan los novios desde el admin.
 
 ## Product Principles
 

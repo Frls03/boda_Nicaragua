@@ -27,7 +27,6 @@ idempotente: se puede volver a ejecutar sin borrar datos.
    VITE_SUPABASE_ANON_KEY=<anon key>
    ```
    Nunca usar la clave *service_role* en la app: salta todas las reglas.
-7. **Quitar el modo demo** (`src/lib/demoClient.js`), que solo se activa sin `.env`.
 
 ## Qué protege
 
