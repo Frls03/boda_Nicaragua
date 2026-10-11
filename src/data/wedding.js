@@ -260,11 +260,23 @@ export function formatDate(isoDate) {
 }
 
 // ─── Mensaje de invitacion (boton "copiar" del admin) ─────────────────────────
-// El original tenia el dominio fijo; aca se usa el dominio donde este publicada.
+// Dominio oficial fijo: el mensaje sale igual aunque el admin se abra desde
+// otro dominio (nexlum, vercel.app) o desde la computadora del desarrollador.
+const INVITATION_URL = 'https://weddingjyj.site';
+
+// Un solo mensaje para 1 o 5 personas: "su" sirve para singular y plural, y
+// "Hola" no obliga a adivinar el genero. El nombre va tal como lo cargaron
+// los novios ("Ana Lopez", "Familia Perez", "Carlos y Maria Ruiz").
 export function buildInvitationMessage(guest) {
-  const firstName = (guest.names?.[0] ?? guest.fullName).split(' ')[0];
-  const link = window.location.origin;
-  return `Querido/a ${firstName}, es un honor invitarte a nuestra boda. Aquí tienes el link de tu invitación y tu contraseña:\n${link}\nContraseña: ${guest.password}`;
+  const nombre = String(guest.fullName ?? '').trim();
+  return [
+    `Hola, ${nombre}:`,
+    'Nos casamos y sería un honor contar con su presencia en este día tan especial.',
+    'Esta es su invitación:',
+    INVITATION_URL,
+    `Contraseña: ${guest.password}`,
+    `Con cariño, ${coupleName}`,
+  ].join('\n');
 }
 
 // ─── Excel: importar / exportar ───────────────────────────────────────────────

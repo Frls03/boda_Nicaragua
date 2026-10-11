@@ -92,7 +92,7 @@ function AdminGate({ onAuthenticated }) {
 
         <p className="gate-hint">
           <LockSimple className="ic" size={14} />
-          Solo los novios y quienes coordinan el evento tienen acceso.
+          Solo los novios tienen acceso.
         </p>
       </div>
     </div>
